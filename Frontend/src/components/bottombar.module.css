@@ -1,28 +1,24 @@
-.menucontainer {
+.bottombarcontainer {
     height: 60px;
     background-color: #ffffff;
     position: fixed;
-    top: 0px;
+    bottom: 0px;
     left: 0px;
     right: 0px;
-    width: 100%;
-    /* Ensuring it spans the entire viewport width */
     display: flex;
     flex-direction: row;
     align-items: center;
+    z-index: 0;
     /* Center items vertically */
-    z-index: 9999;
-    /* Set a high z-index value to ensure it stays on top */
 }
 
-.logoimg {
-    position: relative;
+.bottomlogoimg {
     height: 20%;
     width: 150px;
     margin: 5px 20px;
 }
 
-.itemcontainer {
+.bottomitemcontainer {
     width: auto;
     /* Adjusted width */
     text-align: left;
@@ -37,18 +33,4 @@
     font-size: 1rem;
     display: flex;
     /* Make items inside this container flex */
-}
-
-.itemcontainer>* {
-    margin-right: 10px;
-    /* Add spacing between menu items */
-}
-
-.itemcontainer:last-child {
-    margin-right: 20px;
-    /* Adjusted margin for the last item */
-}
-
-.itemcontainer:hover {
-    color: #5f1111;
 }

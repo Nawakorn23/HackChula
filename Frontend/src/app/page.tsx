@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Banner from "@/components/Banner";
 import DetailCard from "@/components/DetailCard";
 import Link from "next/link";
+import BottomBar from "@/components/BottomBar";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       {/* <Link href="/users">
                 <button className="bg-blue-950 text-white font-bold py-2 px-4 rounded">All Users</button>
       </Link> */}
+      <BottomBar/>
     </main>
   );
 }
