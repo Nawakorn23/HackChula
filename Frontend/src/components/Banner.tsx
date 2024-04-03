@@ -9,9 +9,10 @@ import getUsers from '@/libs/getUsers';
 import { getServerSession } from 'next-auth';
 import getUserProfile from '@/libs/getUserProfile';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import Link from 'next/link';
 
 export default function Banner() {
-    const covers = ['/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
+    const covers = ['/img/library.jpg','/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
     const [index, setIndex] = useState(0)
     const router = useRouter()
     const { data: session } = useSession()
@@ -28,7 +29,6 @@ export default function Banner() {
             <div className={styles.backgroundtexture}></div>
 
             <div className='flex justify-center items-center w-full h-full'>
-
                 <div className={styles.bannerText}>
                     <div className={styles.box}>
                         <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
@@ -36,16 +36,18 @@ export default function Banner() {
                         <div className={styles.text}>Chulalongkorn University </div>
                         <div className={styles.text}>Engineering Library</div>
                         <br />
-
-                        <button className={styles.button}>
-                            Reserve study room
-                        </button>
+                        <div>
+                            <div className={styles.line}></div>
+                        </div>
+                        <br />
+                        <Link href={'/room-reserve'}>
+                            <button className={styles.button}>
+                                Reserve study room
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </div>
-
-
-
         </div>
     )
 }

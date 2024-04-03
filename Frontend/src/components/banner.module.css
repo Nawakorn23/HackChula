@@ -5,8 +5,11 @@
     width: 100vw;
     height: 80vh;
     position: relative;
+    margin-top: 0;
+    /* Add this line */
 }
-.bannerText{
+
+.bannerText {
     top: 150px;
     z-index: 20;
     text-align: center;
@@ -18,29 +21,30 @@
     flex-direction: row;
 }
 
-.box{
+.box {
     width: 600px;
-    height: 800px;
+    height: 500px;
     flex-shrink: 0;
-    background-color: #4B3834;
-    /* border-radius: 1rem; */
+    background-color: #ffffff;
+    border-radius: 2rem;
+    outline-width: 5px;
+    outline-offset: 5px;
+    outline-color:aqua;
 }
 
 .backgroundtexture {
-    background: linear-gradient(
-      rgba(77, 70, 70, 0.7),
-      rgba(61, 54, 54, 0.9)
-    );
+    background: linear-gradient(rgba(77, 70, 70, 0.7),
+            rgba(61, 54, 54, 0.9));
     background-size: cover;
     width: 100vw;
-    height: 100vh;
+    height: 80vh;
     position: absolute;
     z-index: 0;
     top: 0;
     left: 0;
 }
 
-.logoimg{
+.logoimg {
     height: 10%;
     width: auto;
     margin: auto;
@@ -50,7 +54,7 @@
 }
 
 .text {
-    color: white;
+    color: rgb(0, 0, 0);
     font-weight: 450;
 }
 
@@ -69,9 +73,21 @@
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease;
+    size: 2rem;
 }
 
 .button:hover {
     background-color: #65121A;
     /* Darker red on hover */
+}
+
+.line {
+    width: 320px;
+    /* Adjust the width as needed */
+    height: 2px;
+    /* Adjust the height as needed */
+    background-color: rgb(172, 150, 150);
+    /* Adjust the color as needed */
+    margin: auto auto;
+    /* Center the line */
 }

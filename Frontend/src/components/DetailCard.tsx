@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 export default function DetailCard(){
     return (
-        <div>
+        <div className='bg-green-500'>
             <div className={styles.card2}>
             <Image src={'/img/logo.jpg'} className={styles.logoimg} alt='logo'
             width={0} height={0} sizes='100vh'/>

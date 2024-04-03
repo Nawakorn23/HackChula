@@ -1,5 +1,5 @@
+/* Card 1 */
 .card1 {
-  /* background-color: #072A56; */
   display: block;
   padding: 5px;
   margin: 53px;
@@ -7,72 +7,74 @@
   height: 50vh;
   position: relative;
   border-radius: 25px;
-  background: linear-gradient(
-    to right,
-    rgba(80,120,160, 0.9),
-    rgba(248,248,248, 0.9)
-  );
+  background: linear-gradient(to right,
+      rgba(80, 120, 160, 0.9),
+      rgba(248, 248, 248, 0.9));
 }
 
-.img2{
+/* Image 2 Container */
+.img2 {
   display: block;
   padding: 10px;
   padding-left: 50%;
-  margin: 0px;
+  margin: 0;
   width: 80vw;
   height: 50vh;
   position: relative;
   border-radius: 25px;
 }
 
-.card11{
+/* Text Container */
+.card11 {
   display: block;
   padding: 20px;
   padding-right: 55%;
   text-align: left;
-  margin: 0px;
+  margin: 0;
   width: 80vw;
   height: 50vh;
   position: relative;
   border-radius: 25px;
 }
 
-
-.img1{
+/* Image 1 Container */
+.img1 {
   display: block;
   padding: 10px;
   padding-right: 50%;
-  margin: 0px;
+  margin: 0;
   width: 80vw;
   height: 50vh;
   position: relative;
   border-radius: 25px;
 }
 
-.card12{
+/* Text Container */
+.card12 {
   display: block;
   padding: 20px;
   padding-left: 55%;
-  margin: 0px;
+  margin: 0;
   width: 80vw;
   height: 50vh;
   position: relative;
   border-radius: 25px;
 }
 
-.card122{
+/* Additional Text Container */
+.card122 {
   display: block;
-  padding: 0px;
+  padding: 0;
   text-align: left;
-  margin: 0px;
+  margin: 0;
   width: 35vw;
   height: 50vh;
   position: absolute;
   border-radius: 25px;
 }
 
+/* Card 2 */
 .card2 {
-  /* background-color: #FD845B; */
   display: block;
   padding: 5px;
   margin: 53px;
@@ -80,15 +82,13 @@
   height: 50vh;
   position: relative;
   border-radius: 25px;
-  background: linear-gradient(
-    to left,
-    rgba(253, 132, 90, 0.9),
-    rgba(248,248,248, 0.9)
-  );
+  background: linear-gradient(to left,
+      rgba(253, 132, 90, 0.9),
+      rgba(248, 248, 248, 0.9));
 }
 
+/* Card 3 */
 .card3 {
-  /* background-color: #FFB9B9; */
   display: block;
   padding: 5px;
   margin: 53px;
@@ -96,9 +96,7 @@
   height: 50vh;
   position: relative;
   border-radius: 25px;
-  background: linear-gradient(
-    to left,
-    rgba(255,185,185, 0.9),
-    rgba(248,248,248, 0.9)
-  );
+  background: linear-gradient(to left,
+      rgba(255, 185, 185, 0.9),
+      rgba(248, 248, 248, 0.9));
 }
