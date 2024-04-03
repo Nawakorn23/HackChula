@@ -18,7 +18,7 @@ export default function Banner() {
     console.log(session)
 
     return (
-        
+
         <div className={styles.banner} onClick={() => { setIndex(index + 1) }}>
             <Image src={covers[index % 3]}
                 alt='cover'
@@ -26,22 +26,26 @@ export default function Banner() {
                 objectFit='cover' />
 
             <div className={styles.backgroundtexture}></div>
-            
-            <div className='flex flex-row w-[50%] h-[60%]'>
-                    
+
+            <div className='flex justify-center items-center w-full h-full'>
+
                 <div className={styles.bannerText}>
                     <div className={styles.box}>
                         <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
-                        width={0} height={0} sizes='100vh'/>
-                        <div>Chulalongkorn University </div>
-                        <div>Engineering Library</div>
-                        
+                            width={0} height={0} sizes='100vh' />
+                        <div className={styles.text}>Chulalongkorn University </div>
+                        <div className={styles.text}>Engineering Library</div>
+                        <br />
+
+                        <button className={styles.button}>
+                            Reserve study room
+                        </button>
                     </div>
                 </div>
             </div>
-            
-            
-            
+
+
+
         </div>
     )
 }

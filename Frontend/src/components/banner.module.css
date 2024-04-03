@@ -1,11 +1,11 @@
-.banner{
+.banner {
     display: block;
     padding: 5px;
     margin: 0px;
     width: 100vw;
     height: 80vh;
+    position: relative;
 }
-
 .bannerText{
     top: 150px;
     z-index: 20;
@@ -19,17 +19,17 @@
 }
 
 .box{
-    width: 800px;
-    height: 600px;
+    width: 600px;
+    height: 800px;
     flex-shrink: 0;
-    background-color: white;
-    border-radius: 1rem;
+    background-color: #4B3834;
+    /* border-radius: 1rem; */
 }
 
 .backgroundtexture {
     background: linear-gradient(
-      rgba(255,185,185, 0.7),
-      rgba(248,248,248, 0.9)
+      rgba(77, 70, 70, 0.7),
+      rgba(61, 54, 54, 0.9)
     );
     background-size: cover;
     width: 100vw;
@@ -47,4 +47,31 @@
     margin-top: 50px;
     margin-bottom: 50px;
 
+}
+
+.text {
+    color: white;
+    font-weight: 450;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #811520;
+    /* Red color */
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    /* Rounded corners */
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #65121A;
+    /* Darker red on hover */
 }

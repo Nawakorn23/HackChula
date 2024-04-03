@@ -15,13 +15,20 @@ export default async function TopMenu() {
                     <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
                     width={0} height={0} sizes='100vh'/>
                 </Link>
+                <TopMenuItem  title="Reserve Room" pageRef="/room-reserve"/>
+                <TopMenuItem  title="E-Books" pageRef="/ebooks"/>
+                <TopMenuItem  title="News" pageRef="/news"/>
+                <TopMenuItem  title="Books" pageRef="/about/books"/>
+                <TopMenuItem  title="Study Space" pageRef="/about/study-space"/>
+                <TopMenuItem  title="About" pageRef="/about"/>
             </div>
-            <div className='flex flex-row absolute right-0 h-full'>
-                <TopMenuItem  title="Login" pageRef="/login"/>
+            <div className='flex flex-row absolute right-0 h-[50%] items-center'>
+                <TopMenuItem title="Login" pageRef="/login" />
                 <Link href="/signup">
-                    <button className="rounded-full bg-[#A41F13] h-[50px] w-[100px] font-bold mx-5 my-4 px-3 py-2 text-lg text-white shadow-sm hover:bg-gradient-to-t from-[#92141A] to-[#D2353C]">Sign up</button>
+                    <button className="rounded-lg bg-[#CC1933] h-[40px] w-[100px] font-bold mx-5 my-0 px-3 py-0 text-lg text-white shadow-sm hover:bg-gradient-to-t from-[#92141A] to-[#D2353C]">Sign up</button>
                 </Link>
             </div>
+
         </div>
     )
 }
