@@ -5,10 +5,8 @@ export default function DetailCard(){
     return (
         <div>
             <div className={styles.card2}>
-                <Image className={styles.img2} src = {'/img/detail.jpg'}
-                alt = 'Product Picture'
-                fill = {true}
-                objectFit='cover'/>
+            <Image src={'/img/logo.jpg'} className={styles.logoimg} alt='logo'
+            width={0} height={0} sizes='100vh'/>
                 <div className={styles.card11}>
                 Purus faucibus ornare suspendisse sed nisi. Leo integer malesuada nunc vel risus commodo. 
                 Hendrerit dolor magna eget est. Tristique magna sit amet purus gravida quis blandit turpis. 
