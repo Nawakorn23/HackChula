@@ -11,7 +11,7 @@ export default async function TopMenu() {
     return (
         <div className={styles.bottombarcontainer}>
             <div className="flex flex-row items-center">
-                <TopMenuItem title="lorem ipsum" pageRef="/" />
+                <TopMenuItem title="bottom bar ??" pageRef="/" />
             </div>
         </div>
     )

@@ -4,8 +4,7 @@
     margin: 0px;
     width: 100vw;
     height: 80vh;
-    position: relative;
-    margin-top: 0;
+    position: static;
     /* Add this line */
 }
 
@@ -29,7 +28,12 @@
     border-radius: 2rem;
     outline-width: 5px;
     outline-offset: 5px;
-    outline-color:aqua;
+    outline-style: inherit;
+    outline-color: aqua;
+    position: relative;
+    /* Added position property */
+    top: -20px;
+    /* Adjust this value to move the box up or down */
 }
 
 .backgroundtexture {
@@ -37,7 +41,7 @@
             rgba(61, 54, 54, 0.9));
     background-size: cover;
     width: 100vw;
-    height: 80vh;
+    height: 100vh;
     position: absolute;
     z-index: 0;
     top: 0;
