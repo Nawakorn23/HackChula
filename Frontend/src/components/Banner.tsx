@@ -26,26 +26,21 @@ export default function Banner() {
                 objectFit='cover' />
 
             <div className={styles.backgroundtexture}></div>
-
-            <div className={styles.bannerText}>
-                <h1 className='text-5xl font-medium '>FridayBid</h1>
-                <h3 className='text-2xl font-medium m-3'>Working together is better than apart</h3>
-
-                {
-                    session ? <div className='z-30 top-10 right-0 font-semibold text-orange-600 text-xl'>
-                        Welcome, {session.user?.name}</div>
-                        : null
-                }
-
-                <button className={styles.button}
-                    onClick={(e) => { e.stopPropagation(); router.push('/coworkings') }}>
-                    CoworkingSpace
-                </button>
-
-
-                
-                
+            
+            <div className='flex flex-row w-[50%] h-[60%]'>
+                    
+                <div className={styles.bannerText}>
+                    <div className={styles.box}>
+                        <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
+                        width={0} height={0} sizes='100vh'/>
+                        <div>Chulalongkorn University </div>
+                        <div>Engineering Library</div>
+                        
+                    </div>
+                </div>
             </div>
+            
+            
             
         </div>
     )
