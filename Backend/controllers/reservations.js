@@ -96,11 +96,11 @@ exports.addReservation = async (req, res, next) => {
     //Check for existed appointment
     const existedReservations = await Reservation.find({ user: req.user.id });
 
-    //If the user is not an admin, they can only create 3 appointment
-    if (existedReservations.length >= 3 && req.user.role !== "admin") {
+    //If the user is not an admin, they can only create 1 appointment
+    if (existedReservations.length >= 1 && req.user.role !== "admin") {
       return res.status(400).json({
         success: false,
-        message: `The user with ID ${req.user.id} has already made 3 appointments`,
+        message: `The user with ID ${req.user.id} has already made 1 appointment`,
       });
     }
 
