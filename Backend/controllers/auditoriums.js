@@ -96,7 +96,7 @@ exports.getAuditorium = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: auditorium,
+      data: auditorium
     });
   } catch (err) {
     res.status(400).json({ success: false });

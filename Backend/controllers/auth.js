@@ -7,10 +7,10 @@ const { options } = require("../routes/auditoriums");
 //access  Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, telephone, password, role } = req.body;
+    const { name, email, telephone, password, role, score} = req.body;
 
     // Create user
-    const user = await User.create({ name, email, telephone, password, role });
+    const user = await User.create({ name, email, telephone, password, role, score});
 
     sendTokenResponse(user, 201, res);
   } catch (err) {
@@ -111,7 +111,7 @@ exports.logout = async (req, res, next) => {
 };
 
 //@desc         Update account user
-//@routes       PUT /api/auth/update
+//@routes       PUT /api/auth/updateMe
 //@access       Private
 exports.updateMe = async (req, res, next) => {
   try {
@@ -222,7 +222,7 @@ exports.getAllUsers = async (req, res, next) => {
 };
 
 // @desc        Delete account user
-// @routes      DELETE /api/auth/delete
+// @routes      DELETE /api/auth/deleteMe
 // @access      Private
 exports.deleteMe = async (req, res, next) => {
   try {

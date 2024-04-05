@@ -32,6 +32,10 @@ const UserSchema = new mongoose.Schema(
       minlength: 6,
       select: false,
     },
+    score:{
+      type: Number,
+      default: 100
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
     createdAt: {
