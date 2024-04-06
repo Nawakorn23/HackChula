@@ -1,6 +1,6 @@
 const Reservation = require("../models/Reservation");
 const User = require("../models/User");
-const { options } = require("../routes/auditoriums");
+const { options } = require("../routes/rooms");
 
 //desc    Register user
 //route   POST /api/auth/register
