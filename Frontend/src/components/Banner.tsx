@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './banner.module.css'
@@ -11,15 +11,24 @@ import getUserProfile from '@/libs/getUserProfile';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Link from 'next/link';
 
+import { motion } from 'framer-motion';
+import AlertBox from './AlertBox';
+
 export default function Banner() {
-    const covers = ['/img/library.jpg','/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
+    const covers = ['/img/library.jpg', '/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
     const [index, setIndex] = useState(0)
     const router = useRouter()
+
     const { data: session } = useSession()
-    console.log(session)
+
+    const [showAlertBox, setShowAlertBox] = useState(false); 
+
+    const handleReserveClick = () => {
+        setShowAlertBox(true);
+        // alert(showAlertBox)
+    }
 
     return (
-
         <div className={styles.banner} onClick={() => { setIndex(index + 1) }}>
             <Image src={covers[index % 3]}
                 alt='cover'
@@ -40,14 +49,22 @@ export default function Banner() {
                             <div className={styles.line}></div>
                         </div>
                         <br />
-                        <Link href={'/room-reserve'}>
-                            <button className={styles.button}>
+                        {/* <Link href={'/room-reserve'}> */}
+                            <motion.button
+                                whileHover={{ scale: 1.03 }}
+                                className={styles.button}
+                                onClick={handleReserveClick}
+                            >
                                 Reserve study room
-                            </button>
-                        </Link>
+                            </motion.button>
+                        {/* </Link> */}
                     </div>
                 </div>
             </div>
+            {
+                showAlertBox ? 
+                    <AlertBox/> : null
+            }
         </div>
     )
 }
