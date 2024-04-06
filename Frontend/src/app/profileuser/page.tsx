@@ -2,9 +2,9 @@ import ViewButton from "@/components/ViewButton"
 
 export default async function profileuser() {
     return (
-        <div className="bg-[#F9F9F9]">
-            <div className="text-center mt-10 text-3xl font-semibold">Status Points</div>
-            <div className="text-center text-5xl mt-20 mb-20">100</div>
+        <div>
+            <div className="text-center pt-10 text-3xl font-semibold">Status Points</div>
+            <div className="text-center text-5xl pt-20 mb-20">100</div>
             <div className="text-center text-[#7B1318]">หากคะแนนต่ำกว่า 90 คะแนน จะไม่สามารถจองห้องประชุมได้เป็นเวลา 1 เดือน</div>
             
             <div className="p-9 mx-auto my-10 w-[65%] shadow-lg font-mono font-medium rounded-lg bg-[FFFFFF] flex flex-col items-left ">
