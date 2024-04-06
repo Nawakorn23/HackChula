@@ -1,4 +1,4 @@
-
+import ViewButton from "@/components/ViewButton"
 
 export default async function profileuser() {
     return (
@@ -42,9 +42,10 @@ export default async function profileuser() {
                             <div className="mr-5">สาย USB</div>
                         </div>
                         
-                        <div className="flex flex-row-reverse">
+                        <ViewButton/>
+                        {/* <div className="flex flex-row-reverse">
                             <button className="bg-[black] rounded-lg text-white px-7 py-2 absolute bottom-0 rigth-0 mr-5">view</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -64,9 +65,10 @@ export default async function profileuser() {
                             <div className="mr-5">-</div>
                         </div>
                         
-                        <div className="flex flex-row-reverse">
+                        <ViewButton/>
+                        {/* <div className="flex flex-row-reverse">
                             <button className="bg-[black] rounded-lg text-white px-7 py-2 absolute bottom-0 rigth-0 mr-5">view</button>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
@@ -88,14 +90,15 @@ export default async function profileuser() {
                             <div className="mr-5">สาย USB</div>
                         </div>
                         
-                        <div className="flex flex-row-reverse">
+                        <ViewButton/>
+                        {/* <div className="flex flex-row-reverse">
                             <button className="bg-[black] rounded-lg text-white px-7 py-2 absolute bottom-0 rigth-0 mr-5">view</button>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
 
-                <div >________________________________________________________________________________________________________</div>
+                <div>________________________________________________________________________________________________________</div>
 
                 <div className=" mt-4">
                     <div className="flex flex-row justify-between">
@@ -111,9 +114,10 @@ export default async function profileuser() {
                             <div className="mr-5">สาย HDMI</div>
                         </div>
                         
-                        <div className="flex flex-row-reverse">
+                        <ViewButton/>
+                        {/* <div className="flex flex-row-reverse">
                             <button className="bg-[black] rounded-lg text-white px-7 py-2 absolute bottom-0 rigth-0 mr-5">view</button>
-                        </div>
+                        </div> */}
                     </div>
 
                 </div>
