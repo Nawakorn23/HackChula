@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Bai_Jamjuree } from "next/font/google";
 import "./globals.css";
 import TopMenu from "@/components/TopMenu";
 import NextAuthProvider from "@/providers/NextAuthProvider";
@@ -7,7 +7,10 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import ReduxProvider from "@/redux/ReduxProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const bai_jamjuree = Bai_Jamjuree({
+  subsets: ['latin', 'latin-ext', 'thai'],
+  weight: ["200", "300", "400", "500", "600", "700"]
+});
 
 export const metadata: Metadata = {
   title: "Chula Engineering Library",
@@ -24,7 +27,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={bai_jamjuree.className}>
         <ReduxProvider>
           <NextAuthProvider session={ nextAuthSession }>
             <TopMenu/>
