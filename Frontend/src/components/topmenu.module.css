@@ -24,8 +24,8 @@
 
 .itemcontainer {
     width: auto;
-    /* Adjusted width */
     text-align: left;
+    align-items: center;
     padding: 0px;
     margin-top: auto;
     margin-bottom: auto;
@@ -36,17 +36,14 @@
     font-weight: 333;
     font-size: 1rem;
     display: flex;
-    /* Make items inside this container flex */
 }
 
 .itemcontainer>* {
     margin-right: 10px;
-    /* Add spacing between menu items */
 }
 
 .itemcontainer:last-child {
     margin-right: 20px;
-    /* Adjusted margin for the last item */
 }
 
 .itemcontainer:hover {

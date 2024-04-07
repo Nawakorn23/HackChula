@@ -5,6 +5,7 @@
     width: 100vw;
     height: 80vh;
     position: static;
+    z-index: 100;
     /* Add this line */
 }
 
@@ -87,11 +88,7 @@
 
 .line {
     width: 320px;
-    /* Adjust the width as needed */
     height: 2px;
-    /* Adjust the height as needed */
     background-color: rgb(172, 150, 150);
-    /* Adjust the color as needed */
     margin: auto auto;
-    /* Center the line */
 }

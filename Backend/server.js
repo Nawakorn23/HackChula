@@ -16,7 +16,7 @@ dotenv.config({ path: "./config/config.env" });
 connectDB();
 
 // Route files
-const auditoriums = require("./routes/auditoriums");
+const rooms = require("./routes/rooms");
 const auth = require("./routes/auth");
 const reservations = require("./routes/reservations");
 
@@ -50,7 +50,7 @@ app.use(hpp());
 // Cookie parser
 app.use(cookieParser());
 
-app.use("/api/auditoriums", auditoriums);
+app.use("/api/rooms", rooms);
 app.use("/api/auth", auth);
 app.use("/api/reservations", reservations);
 

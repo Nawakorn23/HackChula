@@ -1,4 +1,4 @@
-const Auditorium = require("../models/Auditorium");
+const Room = require("../models/Room");
 const Reservation = require("../models/Reservation");
 
 //desc    Get All reservations
@@ -9,22 +9,22 @@ exports.getReservations = async (req, res, next) => {
   // General users can see only their appointment
   if (req.user.role !== "admin") {
     query = Reservation.find({ user: req.user.id }).populate({
-      path: "auditorium",
+      path: "room",
       select: "name province tel",
     });
   } else {
     // If you are an admin, you can see all
-    if (req.params.auditoriumId) {
-      console.log(req.params.auditoriumId);
+    if (req.params.roomId) {
+      console.log(req.params.roomId);
       query = Reservation.find({
-        auditorium: req.params.auditoriumId,
+        room: req.params.roomId,
       }).populate({
-        path: "auditorium",
+        path: "room",
         select: "name province tel",
       });
     } else {
       query = Reservation.find().populate({
-        path: "auditorium",
+        path: "room",
         select: "name province tel",
       });
     }
@@ -51,7 +51,7 @@ exports.getReservations = async (req, res, next) => {
 exports.getReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id).populate({
-      path: "auditorium",
+      path: "room",
       select: "name description tel",
     });
     if (!reservation) {
@@ -75,18 +75,18 @@ exports.getReservation = async (req, res, next) => {
 };
 
 //desc    Add reservation/
-//route   POST /api/:auditoriumId/reservations
+//route   POST /api/:roomId/reservations
 //access  Private
 exports.addReservation = async (req, res, next) => {
   try {
-    req.body.auditorium = req.params.auditoriumId;
+    req.body.room = req.params.roomId;
 
-    const auditorium = await auditorium.findById(req.params.auditoriumId);
+    const room = await room.findById(req.params.roomId);
 
-    if (!auditorium) {
+    if (!room) {
       return res.status(404).json({
         success: false,
-        message: `No auditorium with the id of ${req.params.auditoriumId}`,
+        message: `No room with the id of ${req.params.roomId}`,
       });
     }
 
@@ -106,12 +106,12 @@ exports.addReservation = async (req, res, next) => {
 
     //open-close time
     if (
-      req.body.start.localeCompare(auditorium.opentime) < 0 ||
-      req.body.end.localeCompare(auditorium.closetime) > 0
+      req.body.start.localeCompare(room.opentime) < 0 ||
+      req.body.end.localeCompare(room.closetime) > 0
     ) {
       return res.status(400).json({
         success: false,
-        message: `Please make reservation within ${auditorium.opentime} and ${auditorium.closetime}`,
+        message: `Please make reservation within ${room.opentime} and ${room.closetime}`,
       });
     }
 
@@ -143,9 +143,9 @@ exports.updateReservation = async (req, res, next) => {
   try {
     let reservation = await Reservation.findById(req.params.id);
 
-    let auditorium = await Auditorium.findById(reservation.auditorium);
+    let room = await Room.findById(reservation.room);
 
-    //const auditorium = await Auditorium.findById(req.params.auditoriumId);
+    //const room = await Room.findById(req.params.roomId);
     if (!reservation) {
       return res.status(404).json({
         success: false,
@@ -165,12 +165,12 @@ exports.updateReservation = async (req, res, next) => {
     }
 
     if (
-      req.body.start.localeCompare(auditorium.opentime) < 0 ||
-      req.body.end.localeCompare(auditorium.closetime) > 0
+      req.body.start.localeCompare(room.opentime) < 0 ||
+      req.body.end.localeCompare(room.closetime) > 0
     ) {
       return res.status(400).json({
         success: false,
-        message: `Please update reservation within ${auditorium.opentime} and ${auditorium.closetime}`,
+        message: `Please update reservation within ${room.opentime} and ${room.closetime}`,
       });
     }
 
