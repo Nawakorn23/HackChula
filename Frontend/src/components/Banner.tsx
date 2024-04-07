@@ -12,7 +12,7 @@ import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import Link from 'next/link';
 
 import { motion } from 'framer-motion';
-import AlertBox from './AlertBox';
+import AlertBox from './SucceedBox';
 
 export default function Banner() {
     const covers = ['/img/library.jpg', '/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
@@ -20,13 +20,6 @@ export default function Banner() {
     const router = useRouter()
 
     const { data: session } = useSession()
-
-    const [showAlertBox, setShowAlertBox] = useState(false); 
-
-    const handleReserveClick = () => {
-        setShowAlertBox(true);
-        // alert(showAlertBox)
-    }
 
     return (
         <div className={styles.banner} onClick={() => { setIndex(index + 1) }}>
@@ -49,22 +42,17 @@ export default function Banner() {
                             <div className={styles.line}></div>
                         </div>
                         <br />
-                        {/* <Link href={'/room-reserve'}> */}
+                        <Link href={'/room-reserve'}>
                             <motion.button
                                 whileHover={{ scale: 1.03 }}
                                 className={styles.button}
-                                onClick={handleReserveClick}
                             >
                                 Reserve study room
                             </motion.button>
-                        {/* </Link> */}
+                        </Link>
                     </div>
                 </div>
             </div>
-            {
-                showAlertBox ? 
-                    <AlertBox/> : null
-            }
         </div>
     )
 }

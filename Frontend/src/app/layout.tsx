@@ -6,6 +6,7 @@ import NextAuthProvider from "@/providers/NextAuthProvider";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import ReduxProvider from "@/redux/ReduxProvider";
+import BottomBar from "@/components/BottomBar";
 
 const bai_jamjuree = Bai_Jamjuree({
   subsets: ['latin', 'latin-ext', 'thai'],
@@ -32,9 +33,9 @@ export default async function RootLayout({
           <NextAuthProvider session={ nextAuthSession }>
             <TopMenu/>
             {children}
+            <BottomBar/>
           </NextAuthProvider>
         </ReduxProvider>
-
       </body>
     </html>
   );
