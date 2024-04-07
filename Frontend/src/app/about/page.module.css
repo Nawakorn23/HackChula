@@ -1,0 +1,19 @@
+.aboutContainerOne{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    width: 100%;
+    min-width: 320px;
+    min-height: 530px;
+    padding: 50px;
+    background-color: #ffffff;
+}
+
+.aboutContainerTwo{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    width: 100%;
+    min-width: 320px;
+    min-height: 530px;
+    padding: 50px;
+    background-color: #ffffff;
+}
