@@ -11,8 +11,8 @@ const ItemSchema = new mongoose.Schema(
     name: {
       type: String,
       required: [true, "Please add a name"],
-      unique: true,
       trim: true,
+      unique: false,
       maxlength: [50, "Name can not be more than 50 characters"],
     },
     total: {
@@ -38,8 +38,8 @@ ItemSchema.pre(
   "deleteOne",
   { document: true, query: false },
   async function (next) {
-    console.log(`Items being removed from item ${this._id}`);
-    await this.model("Item").deleteMany({ item: this._id });
+    console.log(`Reservations being removed from item ${this._id}`);
+    await this.model("Reservation").deleteMany({ item: this._id });
     next();
   }
 );

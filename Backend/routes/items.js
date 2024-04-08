@@ -7,15 +7,15 @@ const {
   deleteItem,
 } = require("../controllers/items");
 
-//Include other resource routers
-//const reservationRouter = require("./reservations");
+// Include other resource routers
+// const itemRouter = require("./items");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 const { protect, authorize } = require("../middleware/auth");
 
-//Re-route into other resource routers
-//router.use("/:itemId/reservations/", reservationRouter);
+// Re-route into other resource routers
+// router.use("/:itemId/items/", itemRouter);
 
 router.route("/").get(getItems).post(protect, authorize("admin"), createItem);
 router

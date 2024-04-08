@@ -1,5 +1,6 @@
 const Room = require("../models/Room");
 const Reservation = require("../models/Reservation");
+const Library = require("../models/Library");
 
 //desc    Get All reservations
 //route   Get /api/reservations
@@ -74,14 +75,82 @@ exports.getReservation = async (req, res, next) => {
   }
 };
 
+// //desc    Add reservation/
+// //route   POST /api/:roomId/reservations
+// //access  Private
+// exports.addReservation = async (req, res, next) => {
+//   try {
+//     req.body.room = req.params.roomId;
+//     const room = await Room.findById(req.params.roomId);
+
+//     req.body.library = req.params.libraryId;
+//     const library = await Library.findById(req.params.libraryId);
+
+//     if (!room) {
+//       return res.status(404).json({
+//         success: false,
+//         message: `No room with the id of ${req.params.roomId}`,
+//       });
+//     }
+
+//     // add user Id to req.body
+//     req.body.user = req.user.id;
+
+//     //Check for existed appointment
+//     const existedReservations = await Reservation.find({ user: req.user.id });
+
+//     //If the user is not an admin, they can only create 1 appointment
+//     if (
+//       existedReservations.length == 1 &&
+//       req.user.role !== "admin" &&
+//       req.user.status !== "active"
+//     ) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `The user with ID ${req.user.ID} has already made 1 appointment`,
+//       });
+//     }
+
+//     //open-close time
+//     if (
+//       req.body.start.localeCompare(room.opentime) < 0 ||
+//       req.body.end.localeCompare(room.closetime) > 0
+//     ) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Please make reservation within ${room.opentime} and ${library.closetime}`,
+//       });
+//     }
+
+//     if (req.body.start.localeCompare(req.body.end) > 0) {
+//       return res.status(400).json({
+//         success: false,
+//         message: `Please make valid reservation`,
+//       });
+//     }
+
+//     const reservation = await Reservation.create(req.body);
+//     res.status(201).json({
+//       success: true,
+//       data: reservation,
+//     });
+//   } catch (err) {
+//     console.log(err.stack);
+//     return res.status(500).json({
+//       success: false,
+//       message: "Cannot create Reservation",
+//     });
+//   }
+// };
+
 //desc    Add reservation/
-//route   POST /api/:roomId/reservations
+//route   POST /api/project/:roomId/reservations
 //access  Private
 exports.addReservation = async (req, res, next) => {
   try {
     req.body.room = req.params.roomId;
 
-    const room = await room.findById(req.params.roomId);
+    const room = await Room.findById(req.params.roomId);
 
     if (!room) {
       return res.status(404).json({
@@ -96,11 +165,11 @@ exports.addReservation = async (req, res, next) => {
     //Check for existed appointment
     const existedReservations = await Reservation.find({ user: req.user.id });
 
-    //If the user is not an admin, they can only create 1 appointment
-    if (existedReservations.length >= 1 && req.user.role !== "admin") {
+    //If the user is not an admin, they can only create 3 appointment
+    if (existedReservations.length >= 3 && req.user.role !== "admin") {
       return res.status(400).json({
         success: false,
-        message: `The user with ID ${req.user.id} has already made 1 appointment`,
+        message: `The user with ID ${req.user.id} has already made 3 appointments`,
       });
     }
 
@@ -111,7 +180,7 @@ exports.addReservation = async (req, res, next) => {
     ) {
       return res.status(400).json({
         success: false,
-        message: `Please make reservation within ${room.opentime} and ${room.closetime}`,
+        message: `Please make reservation within ${room.opentime} and ${coworking.closetime}`,
       });
     }
 
@@ -143,9 +212,9 @@ exports.updateReservation = async (req, res, next) => {
   try {
     let reservation = await Reservation.findById(req.params.id);
 
-    let room = await Room.findById(reservation.room);
+    let library = await Library.findById(reservation.library);
 
-    //const room = await Room.findById(req.params.roomId);
+    //const library = await Library.findById(req.params.libraryId);
     if (!reservation) {
       return res.status(404).json({
         success: false,
