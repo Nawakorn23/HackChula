@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import styles from './failedbox.module.css';
 import { motion } from 'framer-motion';
 
-export default function FailedBox({ header, message }: { header: string, message: string }) {
+export default function FailedBox({ header, message, onDismiss }: { header: string, message: string, onDismiss: Function}) {
     const [isVisible, setIsVisible] = useState(true);
 
     const handleDismiss = () => {
         setIsVisible(!isVisible);
+        onDismiss()
     };
 
     return (

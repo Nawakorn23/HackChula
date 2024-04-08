@@ -1,3 +1,4 @@
+/* Common styles for all screen sizes */
 .banner {
     display: block;
     padding: 5px;
@@ -6,14 +7,12 @@
     height: 80vh;
     position: static;
     z-index: 100;
-    /* Add this line */
 }
 
 .bannerText {
     top: 150px;
     z-index: 20;
     text-align: center;
-    /* margin: 0 0 1rem 0; */
     font-weight: 900;
     font-size: 2rem;
     color: #3b365e;
@@ -21,25 +20,8 @@
     flex-direction: row;
 }
 
-.box {
-    width: 600px;
-    height: 500px;
-    flex-shrink: 0;
-    background-color: #ffffff;
-    border-radius: 2rem;
-    outline-width: 5px;
-    outline-offset: 5px;
-    outline-style: inherit;
-    outline-color: aqua;
-    position: relative;
-    /* Added position property */
-    top: -20px;
-    /* Adjust this value to move the box up or down */
-}
-
 .backgroundtexture {
-    background: linear-gradient(rgba(77, 70, 70, 0.7),
-            rgba(61, 54, 54, 0.9));
+    background: linear-gradient(rgba(77, 70, 70, 0.7), rgba(61, 54, 54, 0.9));
     background-size: cover;
     width: 100vw;
     height: 100vh;
@@ -55,7 +37,6 @@
     margin: auto;
     margin-top: 50px;
     margin-bottom: 50px;
-
 }
 
 .text {
@@ -67,28 +48,204 @@
     display: inline-block;
     padding: 10px 20px;
     background-color: #811520;
-    /* Red color */
     color: white;
     font-size: 1rem;
     font-weight: 600;
     border: none;
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
     text-align: center;
     text-decoration: none;
     transition: background-color 0.3s ease;
-    size: 2rem;
 }
 
 .button:hover {
     background-color: #65121A;
-    /* Darker red on hover */
+}
+
+/* Default styles for both phone and desktop */
+.box {
+    width: 35vw;
+    height: 50vh;
+    flex-shrink: 0;
+    background-color: #ffffff;
+    border-radius: 2rem;
+    outline-width: 5px;
+    outline-offset: 5px;
+    outline-style: inherit;
+    outline-color: aqua;
+    position: relative;
+    top: -20px;
 }
 
 .line {
-    width: 320px;
+    width: 30vw;
     height: 2px;
     background-color: rgb(172, 150, 150);
     margin: auto auto;
 }
+
+@media screen and (max-width: 1000px) {
+    .box {
+        width: 50vw;
+        height: 40vh;
+    }
+
+    .line {
+        width: 40vw;
+    }
+
+    .bannerText {
+        font-size: 1.25rem;
+    }
+}
+
+
+/* Media query for phones */
+@media screen and (max-width: 600px) {
+    .box {
+        width: 60vw;
+        height: 40vh;
+    }
+
+    .line {
+        width: 50vw;
+    }
+
+    .bannerText {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .box {
+        width: 60vw;
+        height: 30vh;
+    }
+
+    .line {
+        width: 30vw;
+    }
+
+    .bannerText {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 0.625rem;
+    }
+
+    .logoimg {
+        margin-bottom: 20px;
+    }
+}
+
+/* @media screen and (max-height: 1600px) {
+    .box {
+        width: 50vw;
+        height: 35vh;
+    }
+
+    .line {
+        width: 40vw;
+    }
+
+    .bannerText {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-height: 1000px) {
+    .box {
+        width: 45vw;
+        height: 40vh;
+    }
+
+    .line {
+        width: 35vw;
+    }
+
+    .bannerText {
+        font-size: 1.5rem;
+    }
+}
+
+@media screen and (max-height: 800px) {
+    .box {
+        width: 40vw;
+        height: 50vh;
+    }
+
+    .line {
+        width: 35vw;
+    }
+
+    .bannerText {
+        font-size: 1.25rem;
+    }
+
+    .button {
+        font-size: 2.5vh;
+    }
+}
+
+@media screen and (max-height: 600px) {
+    .box {
+        width: 60vw;
+        height: 40vh;
+    }
+
+    .line {
+        width: 50vw;
+    }
+
+    .bannerText {
+        font-size: 1.25rem;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .box {
+        width: 40vw;
+        height: 60vh;
+    }
+
+    .line {
+        width: 30vw;
+    }
+
+    .bannerText {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 0.625rem;
+    }
+
+    .logoimg {
+        margin-bottom: 20px;
+    }
+}
+
+@media screen and (max-height: 450px) {
+    .box {
+        width: 40vw;
+        height: 70vh;
+    }
+
+    .line {
+        width: 30vw;
+    }
+
+    .bannerText {
+        font-size: 1rem;
+    }
+
+    .button {
+        font-size: 0.625rem;
+    }
+
+    .logoimg {
+        margin-bottom: 20px;
+    }
+} */

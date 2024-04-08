@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import TimeReserve from './TimeReserve';
 import SucceedBox from './SucceedBox';
 import FailedBox from './FailedBox';
+import { motion } from 'framer-motion';
 
 export default function OpenHourBox() {
     const [monFriOpen, setMonFriOpen] = useState('');
@@ -12,8 +13,6 @@ export default function OpenHourBox() {
     const [satClosed, setSatClosed] = useState('');
     const [sunOpen, setSunOpen] = useState('');
     const [sunClosed, setSunClosed] = useState('');
-    const [selectedTime, setSelectedTime] = useState(null);
-
 
     const [showSucceedBox, setShowSucceedBox] = useState(false);
     const [showFailedBox, setShowFailedBox] = useState(false);
@@ -25,15 +24,19 @@ export default function OpenHourBox() {
 
         setTimeout(() => {
             if (response) {
-                setShowSucceedBox(true);
+                setShowSucceedBox(!showSucceedBox);
             } else {
-                setShowFailedBox(true);
+                setShowFailedBox(!showFailedBox);
             }
         }, 350);
     };
 
-    const handleTimeChange = (time: React.SetStateAction<null>) => {
-        setSelectedTime(time);
+    const handleDismissSucceedBox = () => {
+        setShowSucceedBox(false);
+    };
+
+    const handleDismissFailedBox = () => {
+        setShowFailedBox(false);
     };
 
     return (
@@ -41,7 +44,6 @@ export default function OpenHourBox() {
             <div className="bg-white p-8 rounded-lg text-center self-start text-black w-3/6 mt-0 shadow-md border border-gray-300">
                 <p className='text-3xl font-bold mb-4'>เวลาเปิดจองห้องปกติ</p>
                 <hr className="mb-4" />
-                {/* <TimeReserve onDateChange={handleTimeChange} /> */}
                 <div className="mb-6">
                     <p className="mb-4 ml-10 text-left text-2xl mb-2 font-bold text-orange-800">Monday - Friday</p>
                     <div className="flex justify-center items-center">
@@ -76,15 +78,29 @@ export default function OpenHourBox() {
                         </div>
                     </div>
                 </div>
-                <button onClick={handleSave} className="mt-6 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-5 rounded">Save</button>
+                <motion.button
+                    onClick={handleSave}
+                    className="mt-6 bg-gray-900 hover:bg-black text-white font-bold py-3 px-5 rounded shadow-md"
+                    whileHover={{scale: 1.05}}
+                >
+                    Save
+                </motion.button>
             </div>
             {
                 showSucceedBox ?
-                    <SucceedBox header='Saved' message='Room reserve hour has been updated !!' />
+                    <SucceedBox
+                        header='Saved'
+                        message='Room reserve hour has been updated !!'
+                        onDismiss={handleDismissSucceedBox}
+                    />
                     : null
-            } ,{
+            } {
                 showFailedBox ?
-                    < FailedBox header='Failed to save' message='Failed to save reserve hour.' />
+                    < FailedBox
+                        header='Failed to save'
+                        message='Failed to save reserve hour.'
+                        onDismiss={handleDismissFailedBox}
+                    />
                     : null
             }
         </div>

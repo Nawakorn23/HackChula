@@ -5,16 +5,17 @@ import styles from "./succeedbox.module.css";
 
 import { motion } from 'framer-motion';
 
-export default function AlertBox({ header, message }: { header: string, message: string }) {
+export default function SucceedBox({ header, message, onDismiss }: { header: string, message: string, onDismiss: Function }) {
     const [isVisible, setIsVisible] = useState(true);
 
     const handleDismiss = () => {
-        setIsVisible(!isVisible);
+        setIsVisible(false);
+        onDismiss();
     };
 
     return (
         <>
-            {isVisible && (
+            {isVisible ?
                 <div className={styles.card}>
                     <button className={styles.dismiss} type="button" onClick={handleDismiss}>×</button>
                     <div className={styles.header}>
@@ -22,7 +23,6 @@ export default function AlertBox({ header, message }: { header: string, message:
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier">
                                     <path d="M20 7L9.00004 18L3.99994 13" stroke="#000000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-
                                     </path>
                                 </g>
                             </svg>
@@ -39,7 +39,9 @@ export default function AlertBox({ header, message }: { header: string, message:
                         </motion.div>
                     </div>
                 </div>
-            )}
+
+                : null
+            }
         </>
     );
 }

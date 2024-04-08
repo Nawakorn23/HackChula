@@ -6,6 +6,7 @@ import Image from "next/image";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 export default async function TopMenu() {
+
     const session = await getServerSession(authOptions);
 
     return (
@@ -21,12 +22,20 @@ export default async function TopMenu() {
                 </div>
 
             </div>
-            <div className='flex flex-row absolute right-0 h-[50%] items-center'>
-                <TopMenuItem title="Login" pageRef="/login" />
-                <Link href="/register">
-                    <button className="rounded-lg bg-[#92141A] h-[40px] w-[100px] font-bold mx-5 my-0 px-3 py-0 text-lg text-white shadow-sm hover:bg-gradient-to-t from-[#92141A] to-[#D2353C]">Sign up</button>
-                </Link>
-            </div>
+            {
+                session ? (
+                    <div>
+                        Logged In
+                    </div>
+                ) : (
+                    <div className='flex flex-row absolute right-0 h-[50%] items-center'>
+                        <TopMenuItem title="Login" pageRef="/api/auth/signin" />
+                        <Link href="/register">
+                            <button className="rounded-lg bg-[#92141A] h-[40px] w-[100px] font-bold mx-5 my-0 px-3 py-0 text-lg text-white shadow-sm hover:bg-gradient-to-t from-[#92141A] to-[#D2353C]">Sign up</button>
+                        </Link>
+                    </div>
+                )
+            }
         </div>
     )
 }

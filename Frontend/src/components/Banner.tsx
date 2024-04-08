@@ -34,7 +34,7 @@ export default function Banner() {
                 <div className={styles.bannerText}>
                     <div className={styles.box}>
                         <Image src={'/img/logo.png'} className={styles.logoimg} alt='logo'
-                            width={0} height={0} sizes='100vh' />
+                            width={0} height={0} sizes='80vh' />
                         <div className={styles.text}>Chulalongkorn University </div>
                         <div className={styles.text}>Engineering Library</div>
                         <br />

@@ -4,6 +4,7 @@ import Link from "next/link";
 import BottomBar from "@/components/BottomBar";
 
 import ManageOpenHour from "@/components/ManageOpenHour";
+import OpenHourBox from "@/components/OpenHourBox";
 
 export default function controllers() {
     return (
