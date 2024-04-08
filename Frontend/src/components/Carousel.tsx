@@ -25,9 +25,9 @@ export default function CarouselCard({ slide }: { slide: string[] }) {
   };
 
   return (
-    <div className='w-[80%] h-[90%] relative py-5 px-2 rounded-xl'>
-      <div className='absolute top-[50%] translate-y-[-1/2] translate-x-0 left-[32px] z-10 font-bold text-3xl text-[#F9F9F9] cursor-pointer' onClick={goToPrevious}>&lt;</div>
-      <div className='absolute top-[50%] translate-y-[-1/2] translate-x-0 right-[32px] z-10 font-bold text-3xl text-[#F9F9F9] cursor-pointer' onClick={goToNext}>&gt;</div>
+    <div className='w-[90%] h-[90%] min-h-[350px] relative py-5 px-2 rounded-xl'>
+      <div className='absolute top-[50%] translate-y-[-1/2] translate-x-0 left-[32px] z-10 font-bold text-xl sm:text-2xl lg:text-3xl text-[#F9F9F9] cursor-pointer' onClick={goToPrevious}>&lt;</div>
+      <div className='absolute top-[50%] translate-y-[-1/2] translate-x-0 right-[32px] z-10 font-bold text-xl sm:text-2xl lg:text-3xl text-[#F9F9F9] cursor-pointer' onClick={goToNext}>&gt;</div>
       {
         isLoading? (
           <div className='w-[100%] h-[100%] rounded-xl back' style={{backgroundImage: `url(${slide[currentIndex]})`, backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}>

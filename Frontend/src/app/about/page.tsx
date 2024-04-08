@@ -2,6 +2,8 @@ import aboutCSS from './page.module.css'
 import Image from 'next/image'
 import CarouselCard from '@/components/Carousel'
 import Link from 'next/link'
+import InfoBanner from '@/components/InfoBanner'
+import PlaceRoundedIcon from '@mui/icons-material/PlaceRounded';
 
 export default function Aboutus() {
 
@@ -29,8 +31,8 @@ export default function Aboutus() {
                 </div>
             </div>
 
-            <div className={aboutCSS.aboutContainerOne}>
-                <div className="h-full flex flex-col justify-center space-y-4 aboutText p-10">
+            <div className="grid grid-auto md:grid-cols-3 lg:grid-cols-2 w-[100%] min-w-[320px] min-h-[530px] p-[50px] bg-white">
+                <div className="col-span-1 h-full flex flex-col justify-center space-y-4 aboutText py-10">
                     <div className="text-4xl font-semibold">Office Hours</div>
                     <div className="text-xl">
                         <ul>
@@ -40,45 +42,46 @@ export default function Aboutus() {
                         </ul>
                     </div>
                 </div>
-                <div className="min-h-[300px] h-full flex justify-center items-center">
+                <div className="col-span-2 lg:col-span-1 min-h-[350px] h-full flex justify-center items-center">
                     <CarouselCard slide={slides1}/>
                 </div>
             </div>
 
-            <div className={aboutCSS.aboutContainerTwo}>
-                <div className="min-h-[300px] h-full flex justify-center items-center">
+            <div className="grid grid-auto md:grid-cols-3 lg:grid-cols-2 w-[100%] min-w-[320px] min-h-[530px] p-[50px] bg-[#F9F9F9]">
+                <div className="order-1 md:order-none col-span-2 lg:col-span-1 min-h-[350px] h-full flex justify-center items-center">
                     <CarouselCard slide={slides2}/>
                 </div>
-                <div className="h-full flex flex-col justify-center space-y-4 aboutText p-10">
+                <div className="col-span-1 h-full flex flex-col justify-center space-y-4 aboutText py-10">
                     <div className="text-4xl font-semibold">Location</div>
                     <div className="text-xl">Chula Engineering Library, 3rd and 4th floor, Building 3.
                         Faculty of Engineering, Chulalongkorn University
                         254 Payathai Rd., Patumwan, Bangkok 10330
                         <br />
                         <Link href="https://maps.app.goo.gl/pSvCgFpoy3RsSakz6" target='_blank'>
-                            <button className='border border-[#D2353C] text-[#D2353C] py-2 px-4 my-7 rounded-xl border-2 hover:bg-[#D2353C] hover:text-[#F9F9F9]'>
-                                Go to Google Map
+                            <button className='flex flex-row justify-center items-center border border-[#D2353C] text-[#D2353C] py-2 px-4 my-7 rounded-xl border-2 hover:bg-[#D2353C] hover:text-[#F9F9F9]'>
+                                <PlaceRoundedIcon className='mr-2'/>Go to Google Map
                             </button>
                         </Link>
                     </div>
                 </div>
             </div>
 
-            <div className={aboutCSS.aboutContainerOne}>
-                <div className="h-full flex flex-col justify-center space-y-4 aboutText p-10">
+            <div className="grid grid-auto md:grid-cols-3 lg:grid-cols-2 w-[100%] min-w-[320px] min-h-[530px] p-[50px] bg-white">
+                <div className="col-span-1 h-full flex flex-col justify-center space-y-4 aboutText py-10">
                     <div className="text-4xl font-semibold">Contact</div>
                     <div className="text-xl">
                     <ul>
-                            <li>Telephone 02-218-6364</li>
-                            <li>Fax 02-218-6358</li>
+                            <li><span className='font-semibold'>Telephone</span>  02-218-6364</li>
+                            <li><span className='font-semibold'>Fax</span> 02-218-6358</li>
                         </ul>
                     </div>
                 </div>
-                <div className="min-h-[300px] h-full flex justify-center items-center">
+                <div className="col-span-2 lg:col-span-1 min-h-[350px] h-full flex justify-center items-center">
                     <CarouselCard slide={slides3}/>
                 </div>
             </div>
 
+            <InfoBanner/>
         </main>
     )
 }
