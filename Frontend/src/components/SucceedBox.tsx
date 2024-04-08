@@ -1,15 +1,15 @@
 "use client"
 
 import React, { useState } from 'react';
-import styles from "./alertbox.module.css";
+import styles from "./succeedbox.module.css";
 
 import { motion } from 'framer-motion';
 
-export default function AlertBox() {
+export default function AlertBox({ header, message }: { header: string, message: string }) {
     const [isVisible, setIsVisible] = useState(true);
 
     const handleDismiss = () => {
-        setIsVisible(false);
+        setIsVisible(!isVisible);
     };
 
     return (
@@ -28,13 +28,13 @@ export default function AlertBox() {
                             </svg>
                         </div>
                         <div className={styles.content}>
-                            <span className={styles.title}>Reservation Added</span>
+                            <span className={styles.title}>{header}</span>
                             <p className={styles.message}>
-                                Reminder: You must check in within 20 minutes of the reserved time. Otherwise, your reservation will be cancelled.
+                                {message}
                             </p>
                         </div>
                         <br />
-                        <motion.div className={styles.actions} whileHover={{scale:1.05}}>
+                        <motion.div className={styles.actions} whileHover={{ scale: 1.05 }}>
                             <button className={styles.dimiss2} type="button" onClick={handleDismiss}>Dimiss</button>
                         </motion.div>
                     </div>
@@ -43,3 +43,13 @@ export default function AlertBox() {
         </>
     );
 }
+
+
+// Example Ok Box Alert Message
+//
+// <div className={styles.content}>
+//     <span className={styles.title}>Reservation Added</span>
+//     <p className={styles.message}>
+//         Reminder: You must check in within 20 minutes of the reserved time. Otherwise, your reservation will be cancelled.
+//     </p>
+// </div>

@@ -6,13 +6,10 @@
     left: 0px;
     right: 0px;
     width: 100%;
-    /* Ensuring it spans the entire viewport width */
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* Center items vertically */
     z-index: 9999;
-    /* Set a high z-index value to ensure it stays on top */
 }
 
 .logoimg {
@@ -30,7 +27,7 @@
     margin-top: auto;
     margin-bottom: auto;
     margin-left: 35px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Bai Jamjuree', sans-serif;
     font-size: 8pt;
     color: #1d1c1c;
     font-weight: 333;

@@ -9,7 +9,7 @@ export default function TimeReserve({onDateChange}: {onDateChange:Function}){
     const [reserveTime, setReserveTime] = useState<Dayjs | null>(null)
 
     return (
-        <div className="bg-slate-100 rounded-lg space-x-5 space-y-2 w-fit px-10 py-5 flex flex-row justify-center">
+        <div className="bg-slate-200 rounded-lg space-x-5 space-y-2 w-fit px-0 py-0 flex flex-row justify-center">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker className="bg-white" 
                 value={reserveTime}
