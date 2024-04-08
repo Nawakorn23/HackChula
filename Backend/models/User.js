@@ -4,9 +4,24 @@ const jwt = require("jsonwebtoken");
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    username: {
       type: String,
-      require: [true, "Please add a name"],
+      required: [true, "Please add a username"],
+    },
+    firstname: {
+      type: String,
+      required: [true, "Please add a firstname"],
+    },
+    lastname: {
+      type: String,
+      required: [true, "Please add a lastname"],
+    },
+    ID: {
+      type: String,
+      required: [true, "Please add an id"],
+      unique: true,
+      trim: true,
+      maxlength: [10, "ID can not be more than 10 charaters"],
     },
     telephone: {
       type: String,
@@ -26,15 +41,20 @@ const UserSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    status: {
+      type: String,
+      enum: ["active", "finished"],
+      default: "finished",
+    },
     password: {
       type: String,
       require: [true, "Please add a password"],
       minlength: 6,
       select: false,
     },
-    score:{
+    score: {
       type: Number,
-      default: 100
+      default: 100,
     },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
@@ -74,7 +94,7 @@ UserSchema.pre(
   async function (next) {
     console.log(`Reservations begin removed from user ${this._id}`);
     await this.model("Reservation").deleteMany({ user: this._id });
-    console.log('Remove successfully');
+    console.log("Remove successfully");
     next();
   }
 );

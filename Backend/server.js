@@ -20,6 +20,7 @@ const rooms = require("./routes/rooms");
 const auth = require("./routes/auth");
 const reservations = require("./routes/reservations");
 const items = require("./routes/items");
+const librarys = require("./routes/librarys");
 
 const app = express();
 
@@ -55,6 +56,8 @@ app.use("/api/rooms", rooms);
 app.use("/api/auth", auth);
 app.use("/api/reservations", reservations);
 app.use("/api/items", items);
+app.use("/api/librarys", librarys);
+
 
 const PORT = process.env.PORT || 5000;
 const server = app.listen(
