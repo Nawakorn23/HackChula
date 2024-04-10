@@ -55,7 +55,7 @@ export default function Aboutus() {
                     <div className="text-4xl font-semibold">Location</div>
                     <div className="text-xl">Chula Engineering Library, 3rd and 4th floor, Building 3.
                         Faculty of Engineering, Chulalongkorn University
-                        254 Payathai Rd., Patumwan, Bangkok 10330
+                        254 Phayathai Rd., Pathumwan, Bangkok 10330
                         <br />
                         <Link href="https://maps.app.goo.gl/pSvCgFpoy3RsSakz6" target='_blank'>
                             <button className='flex flex-row justify-center items-center border border-[#D2353C] text-[#D2353C] py-2 px-4 my-7 rounded-xl border-2 hover:bg-[#D2353C] hover:text-[#F9F9F9]'>

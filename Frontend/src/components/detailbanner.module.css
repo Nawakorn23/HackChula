@@ -1,5 +1,5 @@
 .lineOffice {
-    width: 1280px;
+    width: 50%;
     height: 3px;
     background-color: #97817f;
     opacity: 50%;
@@ -9,7 +9,7 @@
 }
 
 .lineFAQ {
-    width: 320px;
+    width: 40%;
     height: 4px;
     background-color: #A41F13;
     margin: auto auto;

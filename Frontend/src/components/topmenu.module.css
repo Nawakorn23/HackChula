@@ -14,8 +14,8 @@
 
 .logoimg {
     position: relative;
-    height: 20%;
-    width: 150px;
+    height: 2vh;
+    width: 7vw;
     margin: 5px 20px;
 }
 
@@ -26,7 +26,7 @@
     padding: 0px;
     margin-top: auto;
     margin-bottom: auto;
-    margin-left: 35px;
+    margin-left: 1.25vw;
     font-family: 'Bai Jamjuree', sans-serif;
     font-size: 8pt;
     color: #1d1c1c;
@@ -45,4 +45,23 @@
 
 .itemcontainer:hover {
     color: #5f1111;
+}
+
+@media screen and (max-width: 800px) {
+    .logoimg {
+        width: 10vw;
+    }
+    
+}
+
+@media screen and (max-width: 576px) {
+    .logoimg {
+        height: 2vh;
+        width: 15vw;
+        margin: 5px 20px;
+    }
+
+    .itemcontainer {
+        margin-left: 1vw;
+    }
 }

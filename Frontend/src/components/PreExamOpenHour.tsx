@@ -5,6 +5,7 @@ import TimeReserve from './TimeReserve';
 
 import SucceedBox from './SucceedBox';
 import FailedBox from './FailedBox';
+import { motion } from 'framer-motion';
 
 export default function PreExamOpenHourBox() {
 
@@ -32,8 +33,17 @@ export default function PreExamOpenHourBox() {
         }, 350);
     };
 
+    const handleDismissSucceedBox = () => {
+        setShowSucceedBox(false);
+    };
+
+    const handleDismissFailedBox = () => {
+        setShowFailedBox(false);
+    };
+    
     return (
-        <div className="flex justify-center items-center h-screen">
+        // <div className="flex justify-center items-center h-screen">
+        <div>
             <div className="bg-white p-8 rounded-lg text-center self-start text-black w-3/6 mt-0 shadow-md border border-gray-300">
                 <p className='text-3xl font-bold mb-4'>ตารางสรุปเวลาจองห้องกรณีพิเศษ</p>
                 <hr className="mb-4" />
@@ -71,14 +81,28 @@ export default function PreExamOpenHourBox() {
                         </div>
                     </div>
                 </div>
-                <button onClick={handleSave} className="mt-6 bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-5 rounded">Save</button>
+                <motion.button
+                    onClick={handleSave}
+                    className="mt-6 bg-gray-900 hover:bg-black text-white font-bold py-3 px-5 rounded shadow-md"
+                    whileHover={{ scale: 1.05 }}
+                >
+                    Save
+                </motion.button>
             </div>
             {
                 showSucceedBox ?
-                    <SucceedBox header='Saved' message='Pre-exam open hour saved.' /> : null
+                    <SucceedBox
+                        header='Saved'
+                        message='Pre-exam open hour saved.'
+                        onDismiss={handleDismissSucceedBox}
+                    /> : null
             }, {
                 showFailedBox ?
-                    <FailedBox header='Failed' message='Failed to save Pre-exam open hour.' /> : null
+                    <FailedBox
+                        header='Failed'
+                        message='Failed to save Pre-exam open hour.'
+                        onDismiss={handleDismissFailedBox}
+                    /> : null
             }
         </div>
     );

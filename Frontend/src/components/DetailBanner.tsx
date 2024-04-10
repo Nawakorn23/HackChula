@@ -1,27 +1,27 @@
 import Image from 'next/image';
-
-import styles from "./detailbanner.module.css"
+import styles from "./detailbanner.module.css";
 
 export default function DetailBanner() {
     return (
-        <div className="px-4 text-black bg-gray-200 w-full">
-            <div className="mt-10 text-4xl font-bold mb-4 text-center">
+        <main className="w-full min-h-screen flex flex-col bg-gray-200 mt-20">
+            <div className="mt-20 text-4xl font-bold mb-4 text-center">
                 Engineering Library
             </div>
-            <div className="mt-9 grid grid-cols-3 gap-8">
-                <div className="image-wrapper w-full">
+            <div className="mt-9 flex justify-center gap-8">
+                <div className="image-wrapper">
                     <Image src="/img/detail.jpg"
                         alt="Image 1"
                         width={500}
-                        height={200} />
+                        height={200}
+                    />
                 </div>
-                <div className="image-wrapper w-full">
+                <div className="image-wrapper">
                     <Image src="/img/detail2.jpg"
                         alt="Image 2"
                         width={500}
                         height={200} />
                 </div>
-                <div className="image-wrapper w-full">
+                <div className="image-wrapper">
                     <Image src="/img/detail2.jpg"
                         alt="Image 3"
                         width={500}
@@ -29,7 +29,6 @@ export default function DetailBanner() {
                     />
                 </div>
             </div>
-
 
             <div className="mt-10 text-center w-full">
                 <div className={styles.lineOffice}></div>
@@ -43,10 +42,12 @@ export default function DetailBanner() {
                 <p className="text-lg font-bold mb-2">
                     Library closes on Sunday and public holiday
                 </p>
+                <div className='mb-1vh'></div>
             </div>
+
             <div className="mt-8 text-center bg-white w-full">
-                <hr className="my-10 border-opacity-50 border-black border-b-2 bg-white" />
-                <h2 className="text-4xl font-bold mb-4">คำถามที่พบบ่อย</h2>
+                {/* <hr className="border-opacity-50 border-black border-b-2 bg-white" /> */}
+                <h2 className="my-10 text-4xl font-bold mb-4">คำถามที่พบบ่อย</h2>
                 <div className={styles.lineFAQ}></div>
                 <div className="mt-15">
                     <h3 className="text-xl font-bold mb-2">
@@ -83,6 +84,6 @@ export default function DetailBanner() {
                 <br />
                 <br />
             </div>
-        </div>
+        </main>
     );
 }
