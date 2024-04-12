@@ -39,6 +39,13 @@ const LibrarySchema = new mongoose.Schema(
   }
 );
 
+LibrarySchema.pre('deleteOne', {document: true, query: false}, async function(next){
+  console.log(`Bookings being removed from provider ${this._id}`);
+  await this.model('Reservation').deleteMany({library: this._id});
+  next();
+});
+
+
 LibrarySchema.virtual("reservations", {
   ref: "Reservation",
   localField: "_id",

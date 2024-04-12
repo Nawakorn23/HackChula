@@ -1,6 +1,10 @@
 const Room = require("../models/Room");
 const Reservation = require("../models/Reservation");
 const Library = require("../models/Library");
+const mongoose = require('mongoose');
+const { stack } = require("../routes/reservations");
+const User = require("../models/User");
+
 
 //desc    Get All reservations
 //route   Get /api/reservations
@@ -70,88 +74,24 @@ exports.getReservation = async (req, res, next) => {
     console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Cannot find Reservation",
+      message: "Cannot riri find Reservation",
     });
   }
 };
 
-// //desc    Add reservation/
-// //route   POST /api/:roomId/reservations
-// //access  Private
-// exports.addReservation = async (req, res, next) => {
-//   try {
-//     req.body.room = req.params.roomId;
-//     const room = await Room.findById(req.params.roomId);
-
-//     req.body.library = req.params.libraryId;
-//     const library = await Library.findById(req.params.libraryId);
-
-//     if (!room) {
-//       return res.status(404).json({
-//         success: false,
-//         message: `No room with the id of ${req.params.roomId}`,
-//       });
-//     }
-
-//     // add user Id to req.body
-//     req.body.user = req.user.id;
-
-//     //Check for existed appointment
-//     const existedReservations = await Reservation.find({ user: req.user.id });
-
-//     //If the user is not an admin, they can only create 1 appointment
-//     if (
-//       existedReservations.length == 1 &&
-//       req.user.role !== "admin" &&
-//       req.user.status !== "active"
-//     ) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `The user with ID ${req.user.ID} has already made 1 appointment`,
-//       });
-//     }
-
-//     //open-close time
-//     if (
-//       req.body.start.localeCompare(room.opentime) < 0 ||
-//       req.body.end.localeCompare(room.closetime) > 0
-//     ) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `Please make reservation within ${room.opentime} and ${library.closetime}`,
-//       });
-//     }
-
-//     if (req.body.start.localeCompare(req.body.end) > 0) {
-//       return res.status(400).json({
-//         success: false,
-//         message: `Please make valid reservation`,
-//       });
-//     }
-
-//     const reservation = await Reservation.create(req.body);
-//     res.status(201).json({
-//       success: true,
-//       data: reservation,
-//     });
-//   } catch (err) {
-//     console.log(err.stack);
-//     return res.status(500).json({
-//       success: false,
-//       message: "Cannot create Reservation",
-//     });
-//   }
-// };
 
 //desc    Add reservation/
-//route   POST /api/project/:roomId/reservations
+//route   POST /api/rooms/:roomId/reservations
 //access  Private
 exports.addReservation = async (req, res, next) => {
+
   try {
+
     req.body.room = req.params.roomId;
 
     const room = await Room.findById(req.params.roomId);
 
+    //เช็คว่ามีห้องนี้จริงไหม
     if (!room) {
       return res.status(404).json({
         success: false,
@@ -159,51 +99,137 @@ exports.addReservation = async (req, res, next) => {
       });
     }
 
-    // add user Id to req.body
-    req.body.user = req.user.id;
-
-    //Check for existed appointment
-    const existedReservations = await Reservation.find({ user: req.user.id });
-
-    //If the user is not an admin, they can only create 3 appointment
-    if (existedReservations.length >= 3 && req.user.role !== "admin") {
-      return res.status(400).json({
-        success: false,
-        message: `The user with ID ${req.user.id} has already made 3 appointments`,
+    //เช็คเวลาstartมากกว่าend
+    const { start, end } = req.body;
+    if ( start >= end ) {
+      return res.status(400).json({ 
+        error: 'End date must be after start date' 
       });
     }
 
-    //open-close time
-    if (
-      req.body.start.localeCompare(room.opentime) < 0 ||
-      req.body.end.localeCompare(room.closetime) > 0
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: `Please make reservation within ${room.opentime} and ${coworking.closetime}`,
+    //เช็คว่าเวลาต้องอยู่ในช่วงเปิดปิดของห้องสมุด
+    const library = await Library.findById('6613a791af2d442911f0be7c');
+    const OpenTimeLibrary = library?.opentime || "09:00:00";
+    const CloseTimeLibrary = library?.endtime || "18:00:00"; 
+    // console.log(OpenTimeLibrary)
+    // console.log(CloseTimeLibrary)
+
+    if ( start < OpenTimeLibrary ) {
+      return res.status(400).json({ 
+        error: 'start mai dai ja' 
+      });
+    }
+    else if ( end > CloseTimeLibrary ) {
+      return res.status(400).json({ 
+        error: 'end mai dai ja' 
       });
     }
 
-    if (req.body.start.localeCompare(req.body.end) > 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Please make valid reservation`,
-      });
-    }
+    const { apptDate , studentId2, studentId3, studentId4  } = req.body;
 
-    const reservation = await Reservation.create(req.body);
-    res.status(201).json({
-      success: true,
-      data: reservation,
+    // const CheckStudentID2 = await Reservation.findById({ studentId2: studentId2._id});
+    // console.log(CheckStudentID2)
+
+    //เช็คว่าคนๆนี้ bookingแล้วเวลาทับกับที่เคยจองไหม
+    const { studentId1 } = req.body;
+    const existstudentID1 = await Reservation.countDocuments({studentId1});
+    console.log(existstudentID1)
+    if ( existstudentID1 > 0 ) {
+      const studentIDreservationtotal = await Reservation.find({ studentId1 }).sort({ start: 1 });
+      const { start, end } = req.body;
+      for(const rs of studentIDreservationtotal) {
+        if( rs.start >= start ) {
+          if( rs.start <= start) {
+            return res.status(400).json({ error: 'You jong time ne law1' });
+          }
+          else {
+            if( end <= rs.start ) {
+              console.log('passpasspass')
+            }
+            else {
+              return res.status(400).json({ error: 'You jong time ne law2 endtime maidai' });
+            }
+          }
+          break;
+        }
+      }
+    } 
+
+      const reservation = {
+        apptDate,
+        room,
+        studentId1,
+        studentId2,
+        studentId3,
+        studentId4,
+        start,
+        end,
+      };
+
+    const existingRoomReservations = await Reservation.countDocuments({
+      room: room._id,
     });
+
+    //ห้องนี้ยังไม่เคยถูกจอง -> orderแรกของห้องนั้น
+    if( existingRoomReservations == 0 ) { 
+      
+      const NewReservation = await Reservation.create(reservation);
+      res.status(200).json({ 
+        message: 'Reservation created successfully', 
+        data: NewReservation 
+      });  
+    }
+
+    //ห้องนี้เคยถูกจอง -> เช็คว่าorderเวลาทับซ้อนกับคนที่เคยจองไหม
+    else { 
+
+      // const { apptDate, studentId1, studentId2, studentId3, studentId4, start, end } = req.body;
+
+      const roomNow = await Room.findById(req.params.roomId);
+      const ReservationthisRoomtotal = await Reservation.find({ room: roomNow._id }).sort({ start: 1 });
+      
+      // console.log(roomNow)
+      // console.log(roomNow._id)
+
+      for(const rs of ReservationthisRoomtotal) { //หาstartที่น้อยที่สุดที่มากกว่าstart Order ต่างๆ และ endต้องน้อยกว่าstart Orderถัดไป
+        console.log(start)
+        console.log(rs.start)
+
+        if( rs.start > start ) {
+          if ( rs.start <= start ) {
+            return res.status(400).json({ error: 'Me kon jong law' });
+          }
+          else if ( end >  rs.start ) {
+            return res.status(400).json({ error: 'endtime maidai' });
+          }
+          else {
+        
+            const NewReservation = await Reservation.create(reservation);
+        
+            res.status(200).json({ 
+              message: 'Reservation created successfully', 
+              data: NewReservation 
+            });  
+          }
+        }
+      }
+      const NewReservation = await Reservation.create(reservation); //กรณีorderหลังสุดตอนนี้ในreservationแต่ละห้อง
+      res.status(200).json({ 
+        message: 'Reservation final created successfully', 
+        data: NewReservation 
+      });  
+
+    }
+    
   } catch (err) {
     console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Cannot create Reservation",
+      message: "Cannot eieie create Reservation",
     });
   }
 };
+
 
 //desc    Update reservation
 //route   PUT /api/reservations/:Id

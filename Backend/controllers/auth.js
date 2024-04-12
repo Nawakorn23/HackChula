@@ -7,16 +7,18 @@ const { options } = require("../routes/rooms");
 //access  Public
 exports.register = async (req, res, next) => {
   try {
-    const { name, ID, email, telephone, password, role, score } = req.body;
+    const { username, firstname, lastname,ID,telephone, email,role, password, score } = req.body;
 
     // Create user
     const user = await User.create({
-      name,
+      username,
+      firstname,
+      lastname,
       ID,
-      email,
       telephone,
-      password,
+      email,
       role,
+      password,
       score,
     });
 

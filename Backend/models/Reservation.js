@@ -14,7 +14,7 @@ const ReservationSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
-    unique: true,
+    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -22,7 +22,7 @@ const ReservationSchema = new mongoose.Schema({
   studentId2: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -30,7 +30,7 @@ const ReservationSchema = new mongoose.Schema({
   studentId3: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -38,19 +38,26 @@ const ReservationSchema = new mongoose.Schema({
   studentId4: {
     type: String,
     required: true,
-    unique: true,
+    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
   },
   start: {
-    type: Date,
+    // type: Date,
+    // required: true,
+    // default: Date.now,
+    type: String,
     required: true,
-    default: Date.now,
+    default: "08:00:00",
+
   },
   end: {
-    type: Date,
+    // type: Date,
+    // required: true,
+    type: String,
     required: true,
+    default: "10:00:00",
   },
   Plug: {
     type: Boolean,
@@ -62,7 +69,7 @@ const ReservationSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  HTML: {
+  HTMI: {
     type: Boolean,
     required: true,
     default: false,
@@ -77,5 +84,7 @@ const ReservationSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+ReservationSchema.index({ apptDate: 1, room: 1 }, { unique: true }); 
 
 module.exports = mongoose.model("Reservation", ReservationSchema);
