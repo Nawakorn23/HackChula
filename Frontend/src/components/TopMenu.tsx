@@ -16,7 +16,7 @@ export default async function TopMenu() {
                 </Link>
                 <div className={`${styles.itemcontainer} flex justify-center flex-grow`}>
                     <TopMenuItem title="Home" pageRef="/" />
-                    <TopMenuItem title="Reserve Room" pageRef="/room-reserve" />
+                    <TopMenuItem title="Reserve Room" pageRef="/room" />
                     <TopMenuItem title="About" pageRef="/about" />
                 </div>
 
