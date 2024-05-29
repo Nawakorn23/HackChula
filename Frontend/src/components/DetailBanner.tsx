@@ -9,20 +9,20 @@ export default function DetailBanner() {
             </div>
             <div className="mt-9 flex justify-center gap-8">
                 <div className="image-wrapper">
-                    <Image src="/img/detail.jpg"
+                    <Image src="/img/homepage_p3.jpg"
                         alt="Image 1"
                         width={500}
                         height={200}
                     />
                 </div>
                 <div className="image-wrapper">
-                    <Image src="/img/detail2.jpg"
+                    <Image src="/img/homepage_p2.jpg"
                         alt="Image 2"
                         width={500}
                         height={200} />
                 </div>
                 <div className="image-wrapper">
-                    <Image src="/img/detail2.jpg"
+                    <Image src="/img/homepage_p1.jpg"
                         alt="Image 3"
                         width={500}
                         height={200}

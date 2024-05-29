@@ -22,8 +22,8 @@ export default function Banner() {
     const { data: session } = useSession()
 
     return (
-        <div className={styles.banner} onClick={() => { setIndex(index + 1) }}>
-            <Image src={covers[index % 3]}
+        <div className={styles.banner}>
+            <Image src={covers[0]}
                 alt='cover'
                 fill={true}
                 objectFit='cover' />
