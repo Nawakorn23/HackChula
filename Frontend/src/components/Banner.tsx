@@ -15,7 +15,7 @@ import { motion } from 'framer-motion';
 import AlertBox from './SucceedBox';
 
 export default function Banner() {
-    const covers = ['/img/library.jpg', '/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
+    const covers = ['/img/library.jpg']
     const [index, setIndex] = useState(0)
     const router = useRouter()
 
