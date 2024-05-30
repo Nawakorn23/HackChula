@@ -42,7 +42,7 @@ export default function Banner() {
                             <div className={styles.line}></div>
                         </div>
                         <br />
-                        <Link href={'/room-reserve'}>
+                        <Link href={'/room'}>
                             <motion.button
                                 whileHover={{ scale: 1.03 }}
                                 className={styles.button}

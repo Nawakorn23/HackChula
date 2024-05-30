@@ -81,8 +81,8 @@ export default function DetailBanner() {
                         A: ต้องเป็นบุคคลากรของคณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัยเท่านั้น
                     </p>
                 </div>
-                <br />
-                <br />
+                <br/>
+                <br/>
             </div>
         </main>
     );
