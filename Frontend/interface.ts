@@ -5,10 +5,10 @@ export interface CoworkingItem {
     tel: string,
     openTime:string,
     closeTime:string,
-    picture: string,
     __v: number,
     id: string,
-    type : string
+    type : string,
+    picture : string,
   }
   
 export interface CoworkingJson {
