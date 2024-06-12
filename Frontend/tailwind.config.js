@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         khula: ['Khula', 'sans-serif'],
+        kanit: ['Kanit', 'sans-serif'],
       },
     },
   },

@@ -7,7 +7,8 @@ export interface CoworkingItem {
     closeTime:string,
     picture: string,
     __v: number,
-    id: string
+    id: string,
+    type : string
   }
   
 export interface CoworkingJson {

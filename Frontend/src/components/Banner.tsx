@@ -41,7 +41,6 @@ export default function Banner() {
                         <div>
                             <div className={styles.line}></div>
                         </div>
-                        <br />
                         <Link href={'/room'}>
                             <motion.button
                                 whileHover={{ scale: 1.03 }}
@@ -50,6 +49,7 @@ export default function Banner() {
                                 Reserve study room
                             </motion.button>
                         </Link>
+                        <br />
                     </div>
                 </div>
             </div>
