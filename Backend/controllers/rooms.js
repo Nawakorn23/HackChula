@@ -26,8 +26,9 @@ exports.getRooms = async (req, res, next) => {
         );
     
         //finding resource
-        query = Room.find(JSON.parse(queryStr)).populate("reservations");
-    
+        // query = Room.find(JSON.parse(queryStr)).populate("reservations");
+        query = Room.find(JSON.parse(queryStr))
+
         //Select Feilds
         if (req.query.select) {
           const fields = req.query.select.split(",").join(" ");
@@ -87,7 +88,7 @@ exports.getRooms = async (req, res, next) => {
 // @access      Public
 exports.getRoom = async (req, res, next) => {
   try {
-    const room = await Room.findById(req.params.id);
+    const room = await Room.findOne({id: req.params.id});
 
     if (!room) {
       return res.status(400).json({ success: false });
@@ -106,7 +107,6 @@ exports.getRoom = async (req, res, next) => {
 // @routes      POST /api/rooms
 // @access      Private
 exports.createRoom = async (req, res, next) => {
-  // console.log(req.body);
   const room = await Room.create(req.body);
   res.status(201).json({ success: true, data: room });
 };
@@ -116,8 +116,8 @@ exports.createRoom = async (req, res, next) => {
 // @access      Private
 exports.updateRoom = async (req, res, next) => {
   try {
-    const room = await Room.findByIdAndUpdate(
-      req.params.id,
+    const room = await Room.findOneAndUpdate(
+      {id: req.params.id},
       req.body,
       {
         new: true,
@@ -137,6 +137,7 @@ exports.updateRoom = async (req, res, next) => {
     res.status(400).json({ success: false });
   }
 };
+
 
 // @desc        Delete single room
 // @routes      DELETE /api/rooms/:id

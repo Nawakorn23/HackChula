@@ -38,6 +38,10 @@ const RoomSchema = new mongoose.Schema(
       type: String,
       default: "-",
     },
+    picture: {
+      type: String,
+      default: "-",
+    }
   },
   {
     toJSON: { virtuals: true },
