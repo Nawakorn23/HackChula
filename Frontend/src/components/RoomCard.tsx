@@ -19,7 +19,6 @@ export default function RoomCard({coItem}: {coItem:CoworkingItem}){
                 </div>
                 <div className="w-full h-[15%] p-[10px] mt-5 text-lg text-center">{coItem.name}</div>
                 <div>{coItem.picture}</div>
-                <div>Hello</div>
                 <div className="flex justify-center">
                     <Link href={`/rooms/${coItem.id}`}>
                         <button className='rounded-lg font-kanit bg-[#252645] h-[38px] w-[90px] m-5 px-3 py-0 text-white shadow-sm hover:bg-gradient-to-t from-[#1A2B3F] to-[#526D8E]' >

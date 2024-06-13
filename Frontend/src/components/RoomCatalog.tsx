@@ -23,9 +23,9 @@ export default function RoomCatalog({ coJson }: { coJson: Promise<CoworkingJson>
         <>
             <div className="flex justify-center">
                 <div className="flex my-10 text-[20px] font-khula font-medium border-2 rounded-3xl border-[#D2353C] py-2 w-[1000px] justify-center">
-                    <div className="mx-[100px]" onClick={() => {setSelectedRoom('Seminar room'); }}>Seminar Room</div>
-                    <div className="mx-[100px]" onClick={() => {setSelectedRoom('Study room'); }}>Study Room</div>
-                    <div className="mx-[100px]" onClick={() => {setSelectedRoom('The box'); }}>The Box</div>
+                    <div className={`mx-[100px] ${selectedRoom === 'Seminar room' ? 'bg-red-500' : 'bg-[#F9F9F9]'}`} onClick={() => {setSelectedRoom('Seminar room'); }}>Seminar Room</div>
+                    <div className={`mx-[100px] ${selectedRoom === 'Study room' ? 'bg-red-500' : 'bg-[#F9F9F9]'}`} onClick={() => {setSelectedRoom('Study room'); }}>Study Room</div>
+                    <div className={`mx-[100px] ${selectedRoom === 'The box' ? 'bg-red-500' : 'bg-[#F9F9F9]'}`} onClick={() => {setSelectedRoom('The box'); }}>The Box</div>
                 </div>
             </div>
 
@@ -40,4 +40,4 @@ export default function RoomCatalog({ coJson }: { coJson: Promise<CoworkingJson>
             </div>
         </>
     );
-}
+}       
