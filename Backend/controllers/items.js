@@ -87,7 +87,7 @@ exports.getItems = async (req, res, next) => {
 // @access      Public
 exports.getItem = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id);
+    const item = await Item.findOne({id: req.params.id});
 
     if (!item) {
       return res.status(400).json({ success: false });
@@ -116,10 +116,14 @@ exports.createItem = async (req, res, next) => {
 // @access      Private
 exports.updateItem = async (req, res, next) => {
   try {
-    const item = await Item.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    const item = await Item.findOneAndUpdate(
+      {id: req.params.id},
+      req.body,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
 
     if (!item) {
       return res.status(400).json({ success: false });
@@ -139,7 +143,7 @@ exports.updateItem = async (req, res, next) => {
 // @access      Private
 exports.deleteItem = async (req, res, next) => {
   try {
-    const item = await Item.findById(req.params.id);
+    const item = await Item.findOne({id: req.params.id});
 
     if (!item) {
       return res.status(400).json({

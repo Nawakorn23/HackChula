@@ -144,8 +144,8 @@ exports.updateRoom = async (req, res, next) => {
 // @access      Private
 exports.deleteRoom = async (req, res, next) => {
   try {
-    const room = await Room.findById(req.params.id);
-
+    const room = await Room.findOne({id: req.params.id});
+    
     if (!room) {
       return res.status(400).json({
         success: false,
