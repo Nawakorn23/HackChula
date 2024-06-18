@@ -15,22 +15,22 @@ exports.getReservations = async (req, res, next) => {
   if (req.user.role !== "admin") {
     query = Reservation.find({ user: req.user.id }).populate({
       path: "room",
-      select: "name province tel",
+      select: "id name",
     });
   } else {
     // If you are an admin, you can see all
+    console.log(req.params.roomId);
     if (req.params.roomId) {
-      console.log(req.params.roomId);
       query = Reservation.find({
         room: req.params.roomId,
       }).populate({
         path: "room",
-        select: "name province tel",
+        select: "id name",
       });
     } else {
       query = Reservation.find().populate({
         path: "room",
-        select: "name province tel",
+        select: "id name",
       });
     }
   }
@@ -57,7 +57,7 @@ exports.getReservation = async (req, res, next) => {
   try {
     const reservation = await Reservation.findById(req.params.id).populate({
       path: "room",
-      select: "name description tel",
+      select: "id name",
     });
     if (!reservation) {
       return res.status(404).json({
@@ -81,15 +81,17 @@ exports.getReservation = async (req, res, next) => {
 
 
 //desc    Add reservation/
-//route   POST /api/rooms/:roomId/reservations
+//route   POST /api/rooms/:roomId/reservations  (roomId=id ไม่ใช่ _id)
 //access  Private
 exports.addReservation = async (req, res, next) => {
-
   try {
 
-    req.body.room = req.params.roomId;
+    req.body.user = req.user.id;
 
-    const room = await Room.findById(req.params.roomId);
+    const room = await Room.findOne({id: req.params.roomId});
+    // const room = await Room.findById(req.params.roomId);
+
+    req.body.room = room._id;
 
     //เช็คว่ามีห้องนี้จริงไหม
     if (!room) {
@@ -100,19 +102,28 @@ exports.addReservation = async (req, res, next) => {
     }
 
     //เช็คเวลาstartมากกว่าend
-    const { start, end } = req.body;
-    if ( start >= end ) {
+    // const { start, end } = req.body;
+
+    const start = new Date(req.body.start);
+    const end = new Date(req.body.end);
+
+    if ( start.getTime() >= end.getTime() ) {
       return res.status(400).json({ 
         error: 'End date must be after start date' 
       });
     }
-
     //เช็คว่าเวลาต้องอยู่ในช่วงเปิดปิดของห้องสมุด
+
+    let startDate = start.toISOString().slice(0, 10);
+    let endDate = end.toISOString().slice(0, 10);
+
     const library = await Library.findById('6613a791af2d442911f0be7c');
-    const OpenTimeLibrary = library?.opentime || "09:00:00";
-    const CloseTimeLibrary = library?.endtime || "18:00:00"; 
-    // console.log(OpenTimeLibrary)
-    // console.log(CloseTimeLibrary)
+    const OpenTimeLibrary = new Date(startDate + 'T' + library.opentime + '.000Z');
+    const CloseTimeLibrary = new Date(endDate + 'T' + library.closetime + '.000Z');
+
+    if(startDate !== endDate){
+      return res.status(405).json({success: false, message: 'The reservation start time and end time must be in the same date.'});
+    }
 
     if ( start < OpenTimeLibrary ) {
       return res.status(400).json({ 
@@ -172,8 +183,7 @@ exports.addReservation = async (req, res, next) => {
 
     //ห้องนี้ยังไม่เคยถูกจอง -> orderแรกของห้องนั้น
     if( existingRoomReservations == 0 ) { 
-      
-      const NewReservation = await Reservation.create(reservation);
+      const NewReservation = await Reservation.create(req.body);
       res.status(200).json({ 
         message: 'Reservation created successfully', 
         data: NewReservation 
@@ -213,7 +223,7 @@ exports.addReservation = async (req, res, next) => {
           }
         }
       }
-      const NewReservation = await Reservation.create(reservation); //กรณีorderหลังสุดตอนนี้ในreservationแต่ละห้อง
+      const NewReservation = await Reservation.create(req.body); //กรณีorderหลังสุดตอนนี้ในreservationแต่ละห้อง
       res.status(200).json({ 
         message: 'Reservation final created successfully', 
         data: NewReservation 

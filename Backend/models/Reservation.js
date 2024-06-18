@@ -6,12 +6,17 @@ const ReservationSchema = new mongoose.Schema({
     required: true,
   },
   room: {
-    type: mongoose.Schema.ObjectId,
+    type: String,
     ref: "Room",
     required: true,
   },
-  studentId1: {
+  user: {
     type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    required: true,
+  },
+  studentId1: {
+    type: String,
     ref: "User",
     required: true,
     // unique: true,
@@ -44,18 +49,18 @@ const ReservationSchema = new mongoose.Schema({
     minlength: [10, "ID can be equal to 10 characters"],
   },
   start: {
-    // type: Date,
+    type: Date,
     // required: true,
     // default: Date.now,
-    type: String,
+    // type: String,
     required: true,
     default: "08:00:00",
 
   },
   end: {
-    // type: Date,
+    type: Date,
     // required: true,
-    type: String,
+    // type: String,
     required: true,
     default: "10:00:00",
   },
@@ -69,7 +74,7 @@ const ReservationSchema = new mongoose.Schema({
     required: true,
     default: false,
   },
-  HTMI: {
+  HDMI: {
     type: Boolean,
     required: true,
     default: false,
@@ -85,6 +90,16 @@ const ReservationSchema = new mongoose.Schema({
   },
 });
 
-ReservationSchema.index({ apptDate: 1, room: 1 }, { unique: true }); 
+// ReservationSchema.index({ apptDate: 1, room: 1 }, { unique: true }); 
+
+// ตรวจสอบว่ารหัสนักเรียนไม่ซ้ำกันในแต่ละการจอง
+// ReservationSchema.pre('save', function(next) {
+//   const studentIds = this.students;
+//   const uniqueIds = [...new Set(studentIds)];
+//   if (uniqueIds.length !== studentIds.length) {
+//     return next(new Error("Student IDs must be unique within a reservation"));
+//   }
+//   next();
+// })
 
 module.exports = mongoose.model("Reservation", ReservationSchema);
