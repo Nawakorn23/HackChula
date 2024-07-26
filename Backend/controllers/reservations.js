@@ -253,6 +253,10 @@ exports.updateReservation = async (req, res, next) => {
       });
     }
 
+    /*
+      ไม่ได้เขียนเงื่อนไข แก้เวลา เพราะในเว็บคงให้ลบที่จองไปเลยมากกว่า
+    */
+
     // Handle reservation status updates
     if (req.body.status === 'success') {
       reservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
@@ -293,6 +297,15 @@ exports.updateReservation = async (req, res, next) => {
 //access  Private
 exports.deleteReservation = async (req, res, next) => {
   try {
+
+    // Validate if the ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid reservation ID: ${req.params.id}`,
+      });
+    }
+
     const reservation = await Reservation.findById(req.params.id);
 
     if (!reservation) {
@@ -314,6 +327,8 @@ exports.deleteReservation = async (req, res, next) => {
     }
 
     await reservation.deleteOne();
+
+    await History.deleteMany({ idReservation: reservation._id });
 
     res.status(200).json({
       success: true,
