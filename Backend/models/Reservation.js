@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
+const ReservationSchema = new mongoose.Schema({ 
   apptDate: {
     type: Date,
     required: true,
@@ -19,12 +19,11 @@ const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
     type: mongoose.Schema.ObjectId,
     ref: 'user',
     required: false,
-  },//tel
+  },
   studentId1: {
     type: String,
     ref: "User",
     required: true,
-    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -32,7 +31,6 @@ const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
   studentId2: {
     type: String,
     required: true,
-    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -40,7 +38,6 @@ const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
   studentId3: {
     type: String,
     required: true,
-    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
@@ -48,15 +45,14 @@ const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
   studentId4: {
     type: String,
     required: true,
-    // unique: true,
     trim: true,
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
   },
-  // tel: {
-  //   type: String,
-  //   required: false,
-  // }, //หรือuser ควรมีtelเพิ่ม
+  telephone: {
+    type: String,
+    required: [true, "Please add a telephone"],
+  },
   start: {
     type: Date,
     required: true,

@@ -86,6 +86,12 @@ exports.getReservation = async (req, res, next) => {
 //desc    Add reservation/
 //route   POST /api/rooms/:roomId/reservations  (roomId=id ไม่ใช่ _id)
 //access  Private
+
+/*
+  ยังขาดเงื่อนไข
+  - ห้องสมุดนี้เปิดไหม
+  - ห้องที่จองนี้เปิดไหม
+*/
 exports.addReservation = async (req, res, next) => {
   const session = await mongoose.startSession();
   session.startTransaction();
