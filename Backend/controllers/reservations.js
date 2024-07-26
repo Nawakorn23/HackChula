@@ -4,7 +4,7 @@ const Library = require("../models/Library");
 const mongoose = require('mongoose');
 const { stack } = require("../routes/reservations");
 const User = require("../models/User");
-
+const History = require('../models/History')
 
 //desc    Get All reservations
 //route   Get /api/reservations
@@ -83,17 +83,17 @@ exports.getReservation = async (req, res, next) => {
 //desc    Add reservation/
 //route   POST /api/rooms/:roomId/reservations  (roomId=id ไม่ใช่ _id)
 //access  Private
+//desc    Add reservation/
+//route   POST /api/rooms/:roomId/reservations  (roomId=id ไม่ใช่ _id)
+//access  Private
 exports.addReservation = async (req, res, next) => {
-  try {
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
+  try {
     req.body.user = req.user.id;
 
-    const room = await Room.findOne({id: req.params.roomId});
-    // const room = await Room.findById(req.params.roomId);
-
-    req.body.room = room._id;
-
-    //เช็คว่ามีห้องนี้จริงไหม
+    const room = await Room.findById(req.params.roomId);
     if (!room) {
       return res.status(404).json({
         success: false,
@@ -101,144 +101,123 @@ exports.addReservation = async (req, res, next) => {
       });
     }
 
-    //เช็คเวลาstartมากกว่าend
-    // const { start, end } = req.body;
-
+    // Check time format and conversion
     const start = new Date(req.body.start);
     const end = new Date(req.body.end);
 
-    if ( start.getTime() >= end.getTime() ) {
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+      return res.status(400).json({
+        error: 'Invalid date format for start or end time'
+      });
+    }
+
+    if (start.getTime() >= end.getTime()) {
       return res.status(400).json({ 
         error: 'End date must be after start date' 
       });
     }
-    //เช็คว่าเวลาต้องอยู่ในช่วงเปิดปิดของห้องสมุด
-
-    let startDate = start.toISOString().slice(0, 10);
-    let endDate = end.toISOString().slice(0, 10);
 
     const library = await Library.findById('6613a791af2d442911f0be7c');
-    const OpenTimeLibrary = new Date(startDate + 'T' + library.opentime + '.000Z');
-    const CloseTimeLibrary = new Date(endDate + 'T' + library.closetime + '.000Z');
+    const OpenTimeLibrary = new Date(`${start.toISOString().slice(0, 10)}T${library.opentime}.000Z`);
+    const CloseTimeLibrary = new Date(`${end.toISOString().slice(0, 10)}T${library.closetime}.000Z`);
 
-    if(startDate !== endDate){
-      return res.status(405).json({success: false, message: 'The reservation start time and end time must be in the same date.'});
-    }
-
-    if ( start < OpenTimeLibrary ) {
-      return res.status(400).json({ 
-        error: 'start mai dai ja' 
-      });
-    }
-    else if ( end > CloseTimeLibrary ) {
-      return res.status(400).json({ 
-        error: 'end mai dai ja' 
+    if (start.toISOString().slice(0, 10) !== end.toISOString().slice(0, 10)) {
+      return res.status(405).json({
+        success: false, 
+        message: 'The reservation start time and end time must be on the same date.'
       });
     }
 
-    const { apptDate , studentId2, studentId3, studentId4  } = req.body;
+    if (start < OpenTimeLibrary || end > CloseTimeLibrary) {
+      return res.status(400).json({ 
+        error: 'Not during library hours' 
+      });
+    }
 
-    // const CheckStudentID2 = await Reservation.findById({ studentId2: studentId2._id});
-    // console.log(CheckStudentID2)
-
-    //เช็คว่าคนๆนี้ bookingแล้วเวลาทับกับที่เคยจองไหม
-    const { studentId1 } = req.body;
-    const existstudentID1 = await Reservation.countDocuments({studentId1});
-    console.log(existstudentID1)
-    if ( existstudentID1 > 0 ) {
-      const studentIDreservationtotal = await Reservation.find({ studentId1 }).sort({ start: 1 });
-      const { start, end } = req.body;
-      for(const rs of studentIDreservationtotal) {
-        if( rs.start >= start ) {
-          if( rs.start <= start) {
-            return res.status(400).json({ error: 'You jong time ne law1' });
-          }
-          else {
-            if( end <= rs.start ) {
-              console.log('passpasspass')
-            }
-            else {
-              return res.status(400).json({ error: 'You jong time ne law2 endtime maidai' });
-            }
-          }
-          break;
-        }
+    // Validate and find students
+    const studentIds = [req.body.studentId1, req.body.studentId2, req.body.studentId3, req.body.studentId4];
+    const studentObjects = await Promise.all(studentIds.map(async (studentId) => {
+      if (!studentId) {
+        throw new Error('Missing studentId');
       }
-    } 
+      const student = await User.findOne({ ID: studentId.trim() }).exec();
+      if (!student) {
+        throw new Error(`ไม่พบข้อมูลนักเรียน: ${studentId}`);
+      }
+      return student._id;
+    }));
 
-      const reservation = {
-        apptDate,
-        room,
-        studentId1,
-        studentId2,
-        studentId3,
-        studentId4,
-        start,
-        end,
-      };
 
-    const existingRoomReservations = await Reservation.countDocuments({
-      room: room._id,
+    // Check for overlapping reservations
+    const existingRoomReservations = await Reservation.find({ room: room._id }).sort({ start: 1 });
+
+    let isOverlap = false;
+    for (let i = 0; i < existingRoomReservations.length; i++) {
+      const rs = existingRoomReservations[i];
+
+      if (start < rs.end && end > rs.start) {
+        isOverlap = true;
+        break;
+      }
+    }
+
+    if (isOverlap) {
+      return res.status(500).json({
+        success: false,
+        message: "Time slot overlaps with an existing reservation.",
+      });
+    }
+
+
+    // Create new reservation
+    const NewReservation = await Reservation.create([req.body], { session });
+
+    const histories = studentObjects.map((studentId, index) => ({
+      idReservation: NewReservation[0]._id,
+      apptDate: NewReservation[0].apptDate,
+      room: NewReservation[0].room,
+      user: studentId,
+      status: NewReservation[0].status,
+      studentId1: studentIds[index],
+      start: NewReservation[0].start,
+      end: NewReservation[0].end,
+      Plug: NewReservation[0].Plug,
+      USB: NewReservation[0].USB,
+      HDMI: NewReservation[0].HDMI,
+      Pen: NewReservation[0].Pen,
+      createdAt: NewReservation[0].createdAt,
+    }));
+
+    // Create histories
+    await History.insertMany(histories, { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return res.status(200).json({
+      message: 'Reservation created successfully',
+      data: histories,
     });
 
-    //ห้องนี้ยังไม่เคยถูกจอง -> orderแรกของห้องนั้น
-    if( existingRoomReservations == 0 ) { 
-      const NewReservation = await Reservation.create(req.body);
-      res.status(200).json({ 
-        message: 'Reservation created successfully', 
-        data: NewReservation 
-      });  
-    }
-
-    //ห้องนี้เคยถูกจอง -> เช็คว่าorderเวลาทับซ้อนกับคนที่เคยจองไหม
-    else { 
-
-      // const { apptDate, studentId1, studentId2, studentId3, studentId4, start, end } = req.body;
-
-      const roomNow = await Room.findById(req.params.roomId);
-      const ReservationthisRoomtotal = await Reservation.find({ room: roomNow._id }).sort({ start: 1 });
-      
-      // console.log(roomNow)
-      // console.log(roomNow._id)
-
-      for(const rs of ReservationthisRoomtotal) { //หาstartที่น้อยที่สุดที่มากกว่าstart Order ต่างๆ และ endต้องน้อยกว่าstart Orderถัดไป
-        console.log(start)
-        console.log(rs.start)
-
-        if( rs.start > start ) {
-          if ( rs.start <= start ) {
-            return res.status(400).json({ error: 'Me kon jong law' });
-          }
-          else if ( end >  rs.start ) {
-            return res.status(400).json({ error: 'endtime maidai' });
-          }
-          else {
-        
-            const NewReservation = await Reservation.create(reservation);
-        
-            res.status(200).json({ 
-              message: 'Reservation created successfully', 
-              data: NewReservation 
-            });  
-          }
-        }
-      }
-      const NewReservation = await Reservation.create(req.body); //กรณีorderหลังสุดตอนนี้ในreservationแต่ละห้อง
-      res.status(200).json({ 
-        message: 'Reservation final created successfully', 
-        data: NewReservation 
-      });  
-
-    }
-    
   } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+
+    if (err.code === 11000) { // Handle duplicate key error
+      return res.status(400).json({
+        success: false,
+        message: 'Duplicate reservation detected.'
+      });
+    }
+
     console.log(err.stack);
     return res.status(500).json({
       success: false,
-      message: "Cannot eieie create Reservation",
+      message: "Cannot create Reservation",
     });
   }
 };
+
 
 
 //desc    Update reservation
@@ -246,11 +225,16 @@ exports.addReservation = async (req, res, next) => {
 //access  Private
 exports.updateReservation = async (req, res, next) => {
   try {
+    // Validate if the ID is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({
+        success: false,
+        message: `Invalid reservation ID: ${req.params.id}`,
+      });
+    }
+
     let reservation = await Reservation.findById(req.params.id);
 
-    let library = await Library.findById(reservation.library);
-
-    //const library = await Library.findById(req.params.libraryId);
     if (!reservation) {
       return res.status(404).json({
         success: false,
@@ -258,7 +242,7 @@ exports.updateReservation = async (req, res, next) => {
       });
     }
 
-    //Make sure user is the reservation owner
+    // Make sure user is the reservation owner
     if (
       reservation.user.toString() !== req.user.id &&
       req.user.role !== "admin"
@@ -269,31 +253,31 @@ exports.updateReservation = async (req, res, next) => {
       });
     }
 
-    if (
-      req.body.start.localeCompare(room.opentime) < 0 ||
-      req.body.end.localeCompare(room.closetime) > 0
-    ) {
-      return res.status(400).json({
-        success: false,
-        message: `Please update reservation within ${room.opentime} and ${room.closetime}`,
+    // Handle reservation status updates
+    if (req.body.status === 'success') {
+      reservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+      });
+
+      await History.updateMany({ idReservation: req.params.id }, { status: 'success' });
+    } else if (req.body.status === 'cancel') {
+      reservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+      });
+
+      await History.updateMany({ idReservation: req.params.id }, { status: 'cancel' });
+    } else {
+      reservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
       });
     }
-
-    if (req.body.start.localeCompare(req.body.end) > 0) {
-      return res.status(400).json({
-        success: false,
-        message: `Please update valid reservation`,
-      });
-    }
-
-    reservation = await Reservation.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
 
     res.status(200).json({
       success: true,
-      data: reservation,
+      data: reservation
     });
   } catch (err) {
     console.log(err.stack);

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ReservationSchema = new mongoose.Schema({
+const ReservationSchema = new mongoose.Schema({ //เพิ่ม tel
   apptDate: {
     type: Date,
     required: true,
@@ -10,11 +10,16 @@ const ReservationSchema = new mongoose.Schema({
     ref: "Room",
     required: true,
   },
+  status: {
+    type: String,
+    enum: ["reserve", "approve", "success", "cancel"],
+    default: "reserve",
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: 'user',
-    required: true,
-  },
+    required: false,
+  },//tel
   studentId1: {
     type: String,
     ref: "User",
@@ -48,19 +53,18 @@ const ReservationSchema = new mongoose.Schema({
     maxlength: [10, "ID can be equal to 10 characters"],
     minlength: [10, "ID can be equal to 10 characters"],
   },
+  // tel: {
+  //   type: String,
+  //   required: false,
+  // }, //หรือuser ควรมีtelเพิ่ม
   start: {
     type: Date,
-    // required: true,
-    // default: Date.now,
-    // type: String,
     required: true,
     default: "08:00:00",
 
   },
   end: {
     type: Date,
-    // required: true,
-    // type: String,
     required: true,
     default: "10:00:00",
   },
@@ -90,7 +94,7 @@ const ReservationSchema = new mongoose.Schema({
   },
 });
 
-// ReservationSchema.index({ apptDate: 1, room: 1 }, { unique: true }); 
+ReservationSchema.index({ apptDate: 1, room: 1 ,studentId1:1 }, { unique: true }); //<---- อย่าลบจ้า มันทำให้เพิ่มไม่ได้
 
 // ตรวจสอบว่ารหัสนักเรียนไม่ซ้ำกันในแต่ละการจอง
 // ReservationSchema.pre('save', function(next) {

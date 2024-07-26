@@ -21,6 +21,7 @@ const auth = require("./routes/auth");
 const reservations = require("./routes/reservations");
 const items = require("./routes/items");
 const librarys = require("./routes/librarys");
+const history = require("./routes/history");
 
 const app = express();
 
@@ -57,6 +58,7 @@ app.use("/api/auth", auth);
 app.use("/api/reservations", reservations);
 app.use("/api/items", items);
 app.use("/api/librarys", librarys);
+app.use("/api/history", history);
 
 
 const PORT = process.env.PORT || 5000;
